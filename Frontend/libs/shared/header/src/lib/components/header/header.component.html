@@ -1,0 +1,23 @@
+<header class="absolute top-0 left-0 w-full z-10 text-white px-32">
+  <div class="flex justify-between items-center border-b py-4">
+    <div>
+      <h1 class="text-2xl">
+        <a routerLink="/">ForestClue</a>
+      </h1>
+    </div>
+    <div>
+      <ul class="flex">
+        <li class="ms-2">
+          <a routerLink="/shop">Shop</a>
+        </li>
+        <li class="ms-2">
+          <a routerLink="/about">About</a>
+        </li>
+        <li class="ms-2">
+          <a routerLink="/cart">Cart</a>
+        </li>
+        <ng-content />
+      </ul>
+    </div>
+  </div>
+</header>

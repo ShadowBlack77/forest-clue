@@ -1,0 +1,6 @@
+@ForestClue.Api_HostAddress = http://localhost:5224
+
+GET {{ForestClue.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

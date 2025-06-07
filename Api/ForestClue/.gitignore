@@ -1,0 +1,129 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug*/
+[Rr]elease*/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+## Visual Studio
+.vs/
+.vscode/
+*.code-workspace
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# DotCover
+.idea/
+*.dotCover
+
+# Rider
+.idea/
+*.sln.iml
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Others
+*.log
+*.tlog
+*.cache
+*.pidb
+*.svclog
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup & Archive files
+*.bak
+*.old
+*.orig
+*.swp
+*.zip
+*.tar.gz
+*.7z
+
+# IIS
+_IISExpress/
+*.vspscc
+*.vssscc
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Azure Pipelines
+.azure-pipelines/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Entity Framework
+Migrations/
+
+# dotenv
+.env
+.env.*
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.testsettings
+*.vsmdi
+*.vsp
+*.vspx
+*.sarif
+
+# Logs
+logs/
+*.log
+
+# NCrunch
+.ncrunch*
+*.ncrunchproject
+*.ncrunchsolution
+
+# Visual Studio Code settings
+.vscode/
+.history/
+
+# Windows thumbnails and system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+

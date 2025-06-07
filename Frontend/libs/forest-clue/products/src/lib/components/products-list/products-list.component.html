@@ -1,0 +1,19 @@
+<div class="grid grid-cols-4 gap-4">
+  @for (product of products$ | async; track product.id) {
+    <div class="border rounded-md p-4 flex flex-col items-center">
+      <img 
+        [ngSrc]="product.imageUrl"
+        [alt]="product.name"
+        width="500"
+        height="500"
+      />
+      <div class="flex justify-between w-full items-center mb-2">
+        <h4 class="text-lg font-semibold">{{ product.name }}</h4>
+        <p>{{ product.price | currency }}</p>
+      </div>
+      <div class="w-full">
+        <lib-cart-button />
+      </div>
+    </div>
+  }
+</div>

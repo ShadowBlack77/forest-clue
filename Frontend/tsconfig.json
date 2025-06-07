@@ -1,0 +1,50 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "paths": {
+      "@lib/core/env": [
+        "./libs/core/env/src/index.ts"
+      ],
+      "@lib/auth": [
+        "./libs/auth/src/index.ts"
+      ],
+      "@lib/forest-clue/layouts": [
+        "./libs/forest-clue/layouts/src/index.ts"
+      ],
+      "@lib/forest-clue/products": [
+        "./libs/forest-clue/products/src/index.ts"
+      ],
+      "@lib/forest-clue/cart": [
+        "./libs/forest-clue/cart/src/index.ts"
+      ],
+      "@lib/shared/header": [
+        "./libs/shared/header/src/index.ts"
+      ],
+      "@lib/shared/footer": [
+        "./libs/shared/footer/src/index.ts"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
