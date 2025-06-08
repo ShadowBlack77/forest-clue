@@ -1,5 +1,7 @@
 <ul>
-  <li class="ms-2">
+  <li [ngClass]="{
+    'ms-2': !isMobile()
+  }">
     <a href="">Account</a>
   </li>
 </ul>

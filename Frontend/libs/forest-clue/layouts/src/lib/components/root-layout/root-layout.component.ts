@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, signal, WritableSignal } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { AuthHeaderComponent } from "@lib/auth";
 import { FooterComponent } from "@lib/shared/footer";
-import { HeaderComponent } from "@lib/shared/header";
+import { HeaderComponent, MobileNavComponent } from "@lib/shared/header";
 
 @Component({
   selector: 'lib-root-layout',
@@ -11,7 +11,15 @@ import { HeaderComponent } from "@lib/shared/header";
     RouterOutlet,
     HeaderComponent,
     AuthHeaderComponent,
+    MobileNavComponent,
     FooterComponent
   ]
 })
-export class RootLayoutComponent {}
+export class RootLayoutComponent {
+
+  protected readonly navMenuState: WritableSignal<boolean> = signal<boolean>(false);
+
+  handleToggleMenu(state: boolean): void {
+    this.navMenuState.set(state);
+  }
+}

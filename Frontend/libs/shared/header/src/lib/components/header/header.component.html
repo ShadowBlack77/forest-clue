@@ -1,4 +1,5 @@
-<header class="absolute top-0 left-0 w-full z-10 text-white px-32">
+<header 
+  class="absolute top-0 left-0 w-full z-10 px-4 text-white lg:px-16 xl:px-32" [@fade-in-header]="headerState()">
   <div class="flex justify-between items-center border-b py-4">
     <div>
       <h1 class="text-2xl">
@@ -6,7 +7,7 @@
       </h1>
     </div>
     <div>
-      <ul class="flex">
+      <ul class="hidden sm:flex">
         <li class="ms-2">
           <a routerLink="/shop">Shop</a>
         </li>
@@ -18,6 +19,13 @@
         </li>
         <ng-content />
       </ul>
+      <button class="block sm:hidden text-xl" (click)="toggleNavMenu()">
+        @if (navMenuState()) {
+          <i class="bi bi-x"></i>
+        } @else {
+          <i class="bi bi-list"></i>
+        }
+      </button>
     </div>
   </div>
 </header>

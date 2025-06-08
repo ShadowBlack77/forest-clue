@@ -33,11 +33,17 @@
       "@lib/forest-clue/cart": [
         "./libs/forest-clue/cart/src/index.ts"
       ],
+      "@lib/forest-clue/contact-form": [
+        "./libs/forest-clue/contact-form/src/index.ts",
+      ],
       "@lib/shared/header": [
         "./libs/shared/header/src/index.ts"
       ],
       "@lib/shared/footer": [
         "./libs/shared/footer/src/index.ts"
+      ],
+      "@lib/shared/animations": [
+        "./libs/shared/animations/src/index.ts"
       ]
     }
   },

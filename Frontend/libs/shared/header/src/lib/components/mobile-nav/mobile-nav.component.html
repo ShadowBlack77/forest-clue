@@ -1,0 +1,31 @@
+<aside
+  class="flex sm:hidden h-screen fixed z-20 top-0 bottom-0 left-0 bg-black/70 transition-all ease-in-out translate-x-0 w-[75vw] max-w-[400px]"
+  [ngClass]="{
+    'translate-x-[-100vw]': !navMenuState()
+  }"
+>
+  <div class="w-full p-8 text-white flex justify-center items-center">
+    <div>
+      <div>
+        <h3 class="text-4xl">Menu</h3>
+      </div>
+      <div class="ps-1">
+        <ul>
+          <li class="mb-2">
+            <a routerLink="">Home</a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="">Shop</a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="">About</a>
+          </li>
+          <li class="mb-2">
+            <a routerLink="">Cart</a>
+          </li>
+          <ng-content />
+        </ul>
+      </div>
+    </div>
+  </div>
+</aside>

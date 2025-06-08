@@ -1,5 +1,8 @@
-<lib-header>
+<lib-header (navMenuToggleEmitter)="handleToggleMenu($event)">
   <lib-auth-header />
 </lib-header>
+<lib-mobile-nav [navMenuState]="navMenuState()">
+  <lib-auth-header [isMobile]="true" />
+</lib-mobile-nav>
 <router-outlet />
 <lib-footer />
