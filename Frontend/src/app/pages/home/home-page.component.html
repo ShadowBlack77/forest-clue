@@ -15,16 +15,16 @@
           <div class="text-white w-full border-t pt-4 relative" [@fade-in-hero-nav]="heroNavState()">
             <ul class="flex justify-between">
               <li>
-                <a routerLink="/">(Backpacks)</a>
+                <a routerLink="/shop" [queryParams]="{ category: 'backpacks' }">(Backpacks)</a>
               </li>
               <li>
-                <a routerLink="/">(Equipment)</a>
+                <a routerLink="/shop" [queryParams]="{ category: 'equipment' }">(Equipment)</a>
               </li>
               <li>
-                <a routerLink="/">(Shoes)</a>
+                <a routerLink="/shop" [queryParams]="{ category: 'shoes' }">(Shoes)</a>
               </li>
               <li>
-                <a routerLink="/">(Jackets)</a>
+                <a routerLink="/shop" [queryParams]="{ category: 'jackets' }">(Jackets)</a>
               </li>
             </ul>
           </div>
@@ -35,13 +35,13 @@
   <div class="px-4 lg:px-16 xl:px-32">
     <div class="flex justify-between items-center border-b border-black py-12">
       <h3 class="text-xl">Our bestsellers</h3>
-      <button class="border rounded-md px-2 py-1 border-black items-center">
+      <button routerLink="/shop" class="border rounded-md px-2 py-1 border-black items-center hover:bg-black hover:text-white transition-all ease-in-out">
         More
       </button>
     </div>
   </div>
   <div class="py-12 px-4 lg:px-16 xl:px-32" (appInViewport)="productsListInViewport()" [@fade-in-products]="productsListState()">
-    <lib-products-list />
+    <lib-featured-products />
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen">
     <div class="w-full min-h-[100vh] bg-[url('https://images.pexels.com/photos/9301666/pexels-photo-9301666.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center relative">
@@ -110,16 +110,16 @@
       <h2 class="text-xl mb-5 italic">Are you ready for big advendutes? Let go of your boundries and come with us!</h2>
       <ul class="flex justify-center">
         <li class="me-2">
-          <a routerLink="/">(Bicycles)</a>
+          <a routerLink="/shop" [queryParams]="{ category: 'bicycles' }">(Bicycles)</a>
         </li>
         <li class="me-2">
-          <a routerLink="/">(Equipment)</a>
+          <a routerLink="/shop" [queryParams]="{ category: 'equipment' }">(Equipment)</a>
         </li>
         <li class="me-2">
-          <a routerLink="/">(Shoes)</a>
+          <a routerLink="/shop" [queryParams]="{ category: 'shoes' }">(Shoes)</a>
         </li>
         <li class="me-2">
-          <a routerLink="/">(Shoes)</a>
+          <a routerLink="/shop" [queryParams]="{ category: 'jackets' }">(Jackets)</a>
         </li>
       </ul>
     </div>
@@ -145,7 +145,7 @@
         </h2>
       </div>
       <div>
-        <button class="px-4 py-1 border rounded-md border-black">ABOUT US</button>
+        <button routerLink="/about" class="px-4 py-1 border rounded-md border-black hover:bg-black hover:text-white transition-all ease-in-out">ABOUT US</button>
       </div>
     </div>
     <div>

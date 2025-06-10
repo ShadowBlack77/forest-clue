@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { AfterViewInit, Component, signal, Signal, WritableSignal } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { ProductsListComponent } from "@lib/forest-clue/products";
+import { FeaturedProductsListComponent } from "@lib/forest-clue/products";
 import { InViewportDirective } from "@lib/shared/animations";
 import { interval, take } from "rxjs";
 
@@ -10,7 +10,7 @@ import { interval, take } from "rxjs";
   templateUrl: './home-page.component.html',
   imports: [
     RouterModule,
-    ProductsListComponent,
+    FeaturedProductsListComponent,
     InViewportDirective
   ],
   animations: [

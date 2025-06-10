@@ -1,7 +1,18 @@
 <ul>
-  <li [ngClass]="{
-    'ms-2': !isMobile()
-  }">
-    <a href="">Account</a>
-  </li>
+  @if (user$ | async) {
+    <li 
+      class="ms-2" 
+      [ngClass]="{
+        'ms-2': !isMobile()
+    }">
+      <a routerLink="/account">Account</a>
+    </li>
+    <li class="ms-2">
+      <button>Logout</button>
+    </li>
+  } @else {
+    <li class="ms-2">
+      <a routerLink="/auth/login">Login</a>
+    </li>
+  }
 </ul>

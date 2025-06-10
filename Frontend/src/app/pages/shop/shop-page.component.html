@@ -1,3 +1,50 @@
 <div>
-  Shop 
+  <div class="w-full min-h-[100vh] bg-[url('https://images.pexels.com/photos/113338/pexels-photo-113338.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center relative">
+    <div class="absolute w-full h-full py-6 px-4 lg:px-16 xl:px-32">
+      <div class="flex items-end h-full">
+        <div class="w-full">
+          <h2 class="text-white text-5xl lg:text-8xl font-light mb-4">
+            STORE
+          </h2>
+          <div class="text-white w-full border-t pt-4 relative"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-4 lg:px-16 xl:px-32">
+    <div class="flex justify-between items-center border-b border-black py-12">
+      <h3 class="text-xl">Products</h3>
+      <div>
+        <select 
+          name="page-size" 
+          id="page-size"
+          (change)="changePageSize($event)"
+          class="border border-black rounded-md px-1 py-0.5 me-3"
+        >
+          <option value="1">1</option>
+          <option value="3">3</option>
+          <option value="5" selected>5</option>
+        </select>
+        <select 
+          name="category" 
+          id="category"
+          [(ngModel)]="selectedCategory"
+          (change)="changeCategory()"
+          class="border border-black rounded-md px-1 py-0.5"
+        >
+          <option value="all" selected>All</option>
+          <option value="backpacks">Backpacks</option>
+          <option value="bikes">Bikes</option>
+          <option value="boots">Boots</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="py-6 px-4 lg:px-16 xl:px-32">
+    <lib-products-list 
+      [selectedPageSize]="selectedPageSize()"
+      [selectedPage]="selectedPage()"
+      [selectedCategory]="selectedCategory()"
+    />
+  </div>
 </div>

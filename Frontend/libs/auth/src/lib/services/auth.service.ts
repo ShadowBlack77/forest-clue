@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ENV_TOKEN, EnvConfig } from "@lib/core/env";
 import { BehaviorSubject, Observable, of, take } from "rxjs";
+import { User } from "../models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   private readonly _env: EnvConfig = inject(ENV_TOKEN);
 
-  protected readonly user$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  readonly user$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
   init(): Observable<void> {
     return new Observable((observer) => {
@@ -34,7 +35,7 @@ export class AuthService {
     })
   }
 
-  profile(): Observable<unknown> {
+  profile(): Observable<User | null> {
     return of(null);
   }
 }

@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  @for (product of products$ | async; track product.id) {
+  @for (product of featuredProducts$ | async; track product.id) {
     <div class="border rounded-md p-4 flex flex-col items-center">
       <img 
         [ngSrc]="product.imageUrl"
@@ -16,11 +16,4 @@
       </div>
     </div>
   }
-</div>
-<div class="my-5">
-  <div class="flex justify-center items-center">
-    <button (click)="prev()" class="text-2xl">Prev</button>
-    <p class="mx-4 text-xl">{{ selectedPage() }}</p>
-    <button (click)="next()" class="text-2xl">Next</button>
-  </div>
 </div>

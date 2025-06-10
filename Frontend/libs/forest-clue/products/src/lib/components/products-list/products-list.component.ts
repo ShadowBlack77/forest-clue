@@ -1,7 +1,11 @@
 import { CommonModule, NgOptimizedImage } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, effect, inject, input, InputSignal, OnInit } from "@angular/core";
 import { CartButtonComponent } from "@lib/forest-clue/cart";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Product } from "../../models/product.model";
+import { Store } from "@ngrx/store";
+import { ProductsState } from "../../store/products.reducer";
+import { selectProducts } from "../../store/products.selectors";
 
 @Component({
   selector: 'lib-products-list',
@@ -14,26 +18,25 @@ import { BehaviorSubject } from "rxjs";
 })
 export class ProductsListComponent {
 
-  protected readonly products$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([
-    {
-      id: 1,
-      name: "Backpack",
-      description: "Nice Backpack",
-      category: "backpackes",
-      price: 100.00,
-      inStock: 10,
-      imageUrl: "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-      featured: false
-    },
-    {
-      id: 2,
-      name: "Backpack",
-      description: "Nice Backpack",
-      category: "backpackes",
-      price: 100.00,
-      inStock: 10,
-      imageUrl: "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-      featured: false
-    }
-  ])
+  private readonly _store: Store<ProductsState> = inject(Store);
+
+  protected readonly products$: Observable<Product[]> = this._store.select(selectProducts);
+
+  readonly selectedPageSize: InputSignal<string> = input.required();
+  readonly selectedPage: InputSignal<number> = input.required();
+  readonly selectedCategory: InputSignal<string> = input.required();
+
+  constructor() {
+    effect(() => {
+
+    });
+  }
+
+  prev(): void {
+
+  }
+
+  next(): void {
+
+  }
 }

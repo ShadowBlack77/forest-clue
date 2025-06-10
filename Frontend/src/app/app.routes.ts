@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
+import { LoadProductsResolver } from '@lib/forest-clue/products';
 
 export const routes: Routes = [
   {
     path: '',
+    resolve: [LoadProductsResolver],
     loadComponent: () => import('@lib/forest-clue/layouts').then((c) => c.RootLayoutComponent),
     children: [
       {
