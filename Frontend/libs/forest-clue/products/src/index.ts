@@ -5,6 +5,9 @@ export * from './lib/components/featured-products-list/featured-products-list.co
 // RESOLVER
 export * from './lib/resolver/load-products.resolver';
 
+// MODELS
+export * from './lib/models/product.model';
+
 // STORE
 export * from './lib/store/products.reducer';
 export * from './lib/store/products.effects';

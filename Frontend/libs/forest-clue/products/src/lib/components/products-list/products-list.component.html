@@ -12,7 +12,7 @@
         <p>{{ product.price | currency }}</p>
       </div>
       <div class="w-full">
-        <lib-cart-button />
+        <lib-cart-button [product]="product" />
       </div>
     </div>
   }

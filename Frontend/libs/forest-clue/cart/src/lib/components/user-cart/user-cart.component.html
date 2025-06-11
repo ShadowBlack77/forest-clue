@@ -1,0 +1,80 @@
+@if (cart$ | async; as cart) {
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="border px-4">
+      @for (cartItem of cart.items; track cartItem.id) {
+        <div class="flex p-4 border-b">
+          <div>
+            <img 
+              [ngSrc]="cartItem.imageUrl"
+              [align]="cartItem.name"
+              width="200"
+              height="200"
+            />
+          </div>
+          <div class="w-full flex flex-col justify-between">
+            <div class="flex justify-between">
+              <div>
+                <h3 class="text-2xl">{{ cartItem.name }}</h3>
+                <p>{{ cartItem.description }}</p>
+              </div>
+              <div>
+                <button class="text-lg" (click)="removeFromCart()">
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            </div>
+            <div class="flex justify-between">
+              <div>
+                <p>{{ cartItem.price | currency }} (Per unit)</p>
+              </div>
+              <div class="px-1 flex items-center">
+                <button (click)="decreaseQuantity()">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <p class="mx-2 text-xl">{{ cartItem.quantity }}</p>
+                <button (click)="increaseQuantity()">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>Cart is empty</p>
+      }
+    </div>
+    <div>
+      <div class="mb-4">
+        <h2 class="mb-2 text-2xl">Coupons</h2>
+        <div>
+          <p class="italic">
+            Currently copuons are not avaliable
+          </p>
+        </div>
+      </div>
+      <div>
+        <h2 class="mb-2 text-2xl">Price Details</h2>
+        <div class="bg-gray-100 rounded-md mb-4 p-4">
+          <p class="text-xl">{{ cart.totalQuantity }} Items</p>
+          <div class="mb-3 border-b py-2">
+            @for (cartItem of cart.items; track cartItem.id) {
+              <div class="flex justify-between">
+                <p class="text-gray-500">{{ cartItem.quantity }} x {{ cartItem.name }}</p>
+                <p>{{ cartItem.price * cartItem.quantity | currency }}</p>
+              </div>
+            }
+          </div>
+          <div class="flex justify-between">
+            <p class="text-xl">Total Amount</p>
+            {{ cart.totalPrice | currency }}
+          </div>
+        </div>
+      </div>
+      <div>
+        <button class="bg-black rounded-md text-white w-full py-1 hover:bg-black/80 ease-in-out transition-all">Place Order</button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <p>CART ERROR</p>
+}

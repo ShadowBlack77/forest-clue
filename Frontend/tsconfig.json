@@ -21,6 +21,12 @@
       "@lib/core/env": [
         "./libs/core/env/src/index.ts"
       ],
+      "@lib/core/http": [
+        "./libs/core/http/src/index.ts"
+      ],
+      "@lib/core/tokens": [
+        "./libs/core/tokens/src/index.ts"
+      ],
       "@lib/auth": [
         "./libs/auth/src/index.ts"
       ],

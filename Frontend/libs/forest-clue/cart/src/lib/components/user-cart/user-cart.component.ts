@@ -1,7 +1,35 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
+import { Observable } from "rxjs";
+import { Cart } from "../../model/cart.model";
+import { Store } from "@ngrx/store";
+import { CartState } from "../../store/cart.reducer";
+import { selectCart } from "../../store/cart.selectors";
+import { CommonModule, CurrencyPipe, NgOptimizedImage } from "@angular/common";
 
 @Component({
   selector: 'lib-user-cart',
-  templateUrl: './user-cart.component.html'
+  templateUrl: './user-cart.component.html',
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    CurrencyPipe
+  ]
 })
-export class UserCartComponent {}
+export class UserCartComponent {
+
+  private readonly _store: Store<CartState> = inject(Store);
+
+  protected readonly cart$: Observable<Cart> = this._store.select(selectCart);
+
+  increaseQuantity(): void {
+
+  }
+
+  decreaseQuantity(): void {
+
+  }
+
+  removeFromCart(): void {
+
+  }
+}

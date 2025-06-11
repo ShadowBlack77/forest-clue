@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { LoadCartResolver } from '@lib/forest-clue/cart';
 import { LoadProductsResolver } from '@lib/forest-clue/products';
 
 export const routes: Routes = [
@@ -21,6 +22,9 @@ export const routes: Routes = [
       },
       {
         path: 'cart',
+        resolve: [
+          LoadCartResolver
+        ],
         loadComponent: () => import('./pages/cart/cart-page.component').then((c) => c.CartPageComponent)
       },
       {

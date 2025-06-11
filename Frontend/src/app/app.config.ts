@@ -10,6 +10,8 @@ import { AuthService } from '@lib/auth';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { ProductsEffects, productsReducer } from '@lib/forest-clue/products';
+import { LOCAL_STORAGE_TOKEN } from '@lib/core/tokens';
+import { CartEffects, cartReducer } from '@lib/forest-clue/cart';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,11 +33,17 @@ export const appConfig: ApplicationConfig = {
             apiUrl: Environment.apiUrl
         }
     },
+    {
+        provide: LOCAL_STORAGE_TOKEN,
+        useValue: localStorage
+    },
     provideStore({
-        'products': productsReducer
+        'products': productsReducer,
+        'cart': cartReducer
     }),
     provideEffects([
-        ProductsEffects
+        ProductsEffects,
+        CartEffects
     ])
 ]
 };
