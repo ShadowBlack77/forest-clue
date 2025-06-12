@@ -25,18 +25,10 @@
           <option value="3">3</option>
           <option value="5" selected>5</option>
         </select>
-        <select 
-          name="category" 
-          id="category"
-          [(ngModel)]="selectedCategory"
-          (change)="changeCategory()"
-          class="border border-black rounded-md px-1 py-0.5"
-        >
-          <option value="all" selected>All</option>
-          <option value="backpacks">Backpacks</option>
-          <option value="bikes">Bikes</option>
-          <option value="boots">Boots</option>
-        </select>
+        <lib-categories-list
+          [currentCategory]="selectedCategory()"
+          (changeCategoryEmitter)="changeCategory($event)"
+        />
       </div>
     </div>
   </div>

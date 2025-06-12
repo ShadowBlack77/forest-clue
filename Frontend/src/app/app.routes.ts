@@ -62,6 +62,7 @@ export const routes: Routes = [
   {
     path: 'auth',
     canActivate: [AuthGuard],
+    loadComponent: () => import('@lib/forest-clue/layouts').then((c) => c.AuthLayoutComponent),
     children: [
       {
         path: 'login',

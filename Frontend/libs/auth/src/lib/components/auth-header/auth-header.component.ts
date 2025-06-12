@@ -3,13 +3,15 @@ import { Component, inject, input, InputSignal } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { Observable } from "rxjs";
+import { LogoutButtonComponent } from "../logout-button/logout-button.component";
 
 @Component({
   selector: 'lib-auth-header',
   templateUrl: './auth-header.component.html',
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    LogoutButtonComponent
   ]
 })
 export class AuthHeaderComponent {

@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 
-export const loadProducts = createAction('[PRODCUTS] Load Products');
+export const loadProducts = createAction('[PRODCUTS] Load Products', props<{ page: number, size: number, category: string }>());
 export const loadProductsSuccess = createAction('[PRODUCTS] Load Products Success', props<{ products: any[] }>());
 export const loadProductsFailure = createAction('[PRODCUTS] Load Products Failure', props<{ error: any }>());
 

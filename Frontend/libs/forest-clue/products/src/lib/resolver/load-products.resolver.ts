@@ -11,7 +11,7 @@ export class LoadProductsResolver {
   private readonly _store: Store<ProductsState> = inject(Store);
 
   resolve(): void {
-    this._store.dispatch(loadProducts());
+    this._store.dispatch(loadProducts({ page: 1, size: 5, category: 'all' }));
     this._store.dispatch(loadFeaturedProducts());
     this._store.dispatch(loadProductsCount());
   }

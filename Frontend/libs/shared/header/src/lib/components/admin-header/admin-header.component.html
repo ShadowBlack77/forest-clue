@@ -1,0 +1,23 @@
+<header 
+  class="w-full px-4 lg:px-16 xl:px-32">
+  <div class="flex justify-between items-center border-b py-4">
+    <div>
+      <h1 class="text-2xl">
+        <a routerLink="/admin">ForestClue | Admin</a>
+      </h1>
+    </div>
+    <div>
+      <ul class="hidden sm:flex">
+        <li class="ms-2">
+          <a routerLink="/admin/orders">Orders</a>
+        </li>
+        <li class="ms-2">
+          <a routerLink="/admin/products">Products</a>
+        </li>
+        <li class="ms-2">
+          <ng-content />
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

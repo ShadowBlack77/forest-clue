@@ -15,8 +15,8 @@ export class ProductsEffects {
   loadProducts$ = createEffect(() => {
     return this._actions$.pipe(
       ofType(loadProducts),
-      switchMap(() => {
-        return this._productsService.getAll().pipe(
+      switchMap(({ page, size, category }) => {
+        return this._productsService.getAll(page, size, category).pipe(
           map((products) => {
             return loadProductsSuccess({ products });
           }),
