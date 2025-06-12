@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard, ProtectedGuard, RoleGuard } from '@lib/auth';
 import { LoadCartResolver } from '@lib/forest-clue/cart';
 import { LoadProductsResolver } from '@lib/forest-clue/products';
 
@@ -29,12 +30,14 @@ export const routes: Routes = [
       },
       {
         path: 'account',
+        canActivate: [ProtectedGuard],
         loadComponent: () => import('./pages/account/account-page.component').then((c) => c.AccountPageComponent)
       }
     ]
   },
   {
     path: 'admin',
+    canActivate: [RoleGuard],
     loadComponent: () => import('@lib/forest-clue/layouts').then((c) => c.AdminLayoutComponent),
     children: [
       {
@@ -53,6 +56,12 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    redirectTo: 'auth/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'auth',
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'login',

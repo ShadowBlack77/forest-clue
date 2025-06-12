@@ -1,5 +1,5 @@
-<ul>
-  @if (user$ | async) {
+<ul class="flex">
+  @if (user$ | async; as user) {
     <li 
       class="ms-2" 
       [ngClass]="{
@@ -7,6 +7,15 @@
     }">
       <a routerLink="/account">Account</a>
     </li>
+    @if (user.role === 'admin') {
+      <li 
+        class="ms-2" 
+        [ngClass]="{
+          'ms-2': !isMobile()
+      }">
+        <a routerLink="/admin">Dashboard</a>
+      </li>
+    }
     <li class="ms-2">
       <button>Logout</button>
     </li>
