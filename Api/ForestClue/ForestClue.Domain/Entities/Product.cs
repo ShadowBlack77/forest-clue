@@ -4,13 +4,14 @@ namespace ForestClue.Domain.Entities
 {
     public class Product
     {
-        public required long Id { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public required double Price { get; set; }
-        public int InStock { get; set; }
-        public required string ImageUrl { get; set; }
-        public required string Category { get; set; }
-        public bool Featured { get; set; }
+        public long Id { get; init; }
+        public required string Name { get; init; }
+        public required string Description { get; init; }
+        public required decimal Price { get; init; }
+        public int InStock { get; init; }
+        public required string ImageUrl { get; init; }
+        public long CategoryId { get; init; }
+        public bool Featured { get; init; }
+        public required Category Category { get; init; }
     }
 }

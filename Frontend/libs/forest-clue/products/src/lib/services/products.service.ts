@@ -14,80 +14,18 @@ export class ProductsService {
   private readonly _env: EnvConfig = inject(ENV_TOKEN);
 
   getAll(page: number, size: number, category: string): Observable<Product[]> {
-    
-    return of([
-      {
-        id: 1,
-        name: "Backpack",
-        description: "Nice Backpack",
-        category: "backpackes",
-        price: 100.00,
-        inStock: 10,
-        imageUrl: "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-        featured: false
-      },
-      {
-        id: 2,
-        name: "Backpack",
-        description: "Nice Backpack",
-        category: "backpackes",
-        price: 100.00,
-        inStock: 10,
-        imageUrl: "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-        featured: false
-      }
-    ])
+    return this._httpClient.get<Product[]>(`${this._env.apiUrl}/products?page=${page}&pageSize=${size}&category=${category}`);
   }
 
   getFeatured(): Observable<Product[]> {
-    return of([
-      {
-        id: 1,
-        name: "Backpack",
-        description: "Nice Backpack",
-        category: "backpackes",
-        price: 100.00,
-        inStock: 10,
-        imageUrl: "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-        featured: false
-      },
-      {
-        id: 2,
-        name: "Backpack",
-        description: "Nice Backpack",
-        category: "backpackes",
-        price: 100.00,
-        inStock: 10,
-        imageUrl: "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-        featured: false
-      }
-    ])
+    return this._httpClient.get<Product[]>(`${this._env.apiUrl}/products/featured`);
   }
 
   getProductsCount(): Observable<number> {
-    return of(2);
+    return this._httpClient.get<number>(`${this._env.apiUrl}/products/count`);
   }
 
   getCategories(): Observable<Category[]> {
-    return of([
-      {
-        name: 'all'
-      },
-      {
-        name: 'backpacks'
-      },
-      {
-        name: 'equipment'
-      },
-      {
-        name: 'shoes'
-      },
-      {
-        name: 'jackets'
-      },
-      {
-        name: 'bicycles'
-      }
-    ])
+    return this._httpClient.get<Category[]>(`${this._env.apiUrl}/products/categories`);
   }
 }

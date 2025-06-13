@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForestClue.Api", "ForestClue.Api\ForestClue.Api.csproj", "{AF92ED45-1167-4850-8D7D-14879948A7C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForestClue.Domain", "ForestClue.Domain\ForestClue.Domain.csproj", "{17BB5256-5DA0-42C9-9A89-A87FE1EC710C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForestClue.Infrastructure", "ForestClue.Infrastructure\ForestClue.Infrastructure.csproj", "{A6A58B5F-9591-44AC-AA5D-E665FF667A54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForestClue.Application", "ForestClue.Application\ForestClue.Application.csproj", "{2C788F1C-BED5-428B-AB42-A0FD67338D21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A6A58B5F-9591-44AC-AA5D-E665FF667A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A58B5F-9591-44AC-AA5D-E665FF667A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A58B5F-9591-44AC-AA5D-E665FF667A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C788F1C-BED5-428B-AB42-A0FD67338D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C788F1C-BED5-428B-AB42-A0FD67338D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C788F1C-BED5-428B-AB42-A0FD67338D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C788F1C-BED5-428B-AB42-A0FD67338D21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ForestClue.Application\ForestClue.Application.csproj" />
     <ProjectReference Include="..\ForestClue.Domain\ForestClue.Domain.csproj" />
   </ItemGroup>
 

@@ -1,32 +1,56 @@
-﻿using ForestClue.Domain.Entities;
-using Microsoft.AspNetCore.Http;
+﻿using ForestClue.Application.Abstractions;
+using ForestClue.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForestClue.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController(IProductService productService, ICategoryService categoryService) : ControllerBase
     {
-        private static List<Product> products = new List<Product>
-        {
-            new Product()
-            {
-                Id = 1,
-                Name = "Backpack",
-                Description = "Nice Backpack",
-                Category = "backpackes",
-                Price = 100.00D,
-                InStock = 10,
-                ImageUrl = "https://portdesigns.com/img/cms/Produits/BP%20HOUSTON%20ECO/110265%20-%20110276%20-%20PORT%20-%20HOUSTON%20II%20ECO%20BP%20-%20PERS.jpg",
-                Featured = false
-            }
-        };
 
         [HttpGet]
-        public ActionResult<List<Product>> GetAll()
+        public async Task<ActionResult<List<Product>>> GetAll([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string category)
         {
+            List<Product> products = await productService.GetAllAsync();
+
+            if (!string.IsNullOrWhiteSpace(category) && category != "all")
+            {
+                products = products.Where(x => x.Category.Name == category).ToList();
+            }
+
+            products = products
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
             return Ok(products);
+        }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<List<Product>>> GetFeatured()
+        {
+            List<Product> products = await productService.GetAllAsync();
+
+            products = products.Where(x => x.Featured).ToList();
+
+            return Ok(products);
+        }
+
+        [HttpGet("categories")]
+        public async Task<ActionResult<List<Category>>> GetAllCategories()
+        {
+            List<Category> categories = await categoryService.GetAllAsync();
+
+            return Ok(categories);
+        }
+
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetCount()
+        {
+            List<Product> products = await productService.GetAllAsync();
+
+            return products.Count();
         }
     }
 }
