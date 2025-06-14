@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ENV_TOKEN, EnvConfig } from "@lib/core/env";
-import { BehaviorSubject, Observable, of, take } from "rxjs";
+import { BehaviorSubject, map, Observable, of, switchMap, take } from "rxjs";
 import { User } from "../models/user.model";
 import { Login } from "../models/login.model";
 import { Register } from "../models/register.model";
@@ -38,25 +38,36 @@ export class AuthService {
   }
 
   login(login: Login): Observable<unknown> {
-    return of();
+    return this._httpClient.post(`${this._env.apiUrl}/auth/login`, login, { withCredentials: true }).pipe(
+      switchMap(() => {
+        return this.profile().pipe(
+          take(1),
+          map((user) => {
+            this.user$.next(user);
+          })
+        )
+      })
+    );
   }
 
   register(register: Register): Observable<unknown> {
-    return of();
+    return this._httpClient.post(`${this._env.apiUrl}/auth/register`, register);
   }
 
-  logout(): Observable<void> {
-    return of();
+  logout(): Observable<unknown> {
+    return this._httpClient.post(`${this._env.apiUrl}/auth/logout`, {}, { withCredentials: true }).pipe(
+      take(1),
+      map(() => {
+        this.user$.next(null);
+      })
+    );
   }
 
-  refresh(): Observable<void> {
-    return of();
+  refresh(): Observable<unknown> {
+    return this._httpClient.post(`${this._env.apiUrl}/auth/refresh`, {}, { withCredentials: true });
   }
 
   profile(): Observable<User | null> {
-    return of({
-      email: 'a@a.com',
-      role: 'user'
-    });
+    return this._httpClient.get<User>(`${this._env.apiUrl}/auth/profile`, { withCredentials: true });
   }
 }

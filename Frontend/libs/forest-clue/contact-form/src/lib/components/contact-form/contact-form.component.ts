@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, inject, signal, WritableSignal } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactFormService } from "../../services/contact-form.service";
 import { take } from "rxjs";
@@ -15,6 +15,9 @@ import { take } from "rxjs";
 export class ContactFormComponent {
 
   private readonly _contactFormService: ContactFormService = inject(ContactFormService);
+
+  protected readonly isFormSubmitted: WritableSignal<boolean> = signal(false);
+  protected readonly contactFormMessage: WritableSignal<string> = signal('');
 
   protected readonly contactForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -35,14 +38,18 @@ export class ContactFormComponent {
 
   submit(): void {
     if (this.contactForm.valid) {
+      this.isFormSubmitted.set(true);
+
       this._contactFormService.send(this.contactForm.getRawValue()).pipe(
         take(1)
       ).subscribe({
         next: () => {
-          console.log('SEND!');
+          this.isFormSubmitted.set(false);
+          this.contactFormMessage.set('Thanks for contact!');
         },
         error: (err) => {
-          console.log(err);
+          this.contactFormMessage.set('Error occured while sending message!');
+          this.isFormSubmitted.set(false);
         }
       });
     }

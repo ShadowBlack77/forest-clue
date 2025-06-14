@@ -62,7 +62,7 @@ namespace ForestClue.Infrastructure.Processors
                     Expires = expiration,
                     IsEssential = true,
                     Secure = true,
-                    SameSite = SameSiteMode.Strict
+                    SameSite = SameSiteMode.None
                 }
             );
         }

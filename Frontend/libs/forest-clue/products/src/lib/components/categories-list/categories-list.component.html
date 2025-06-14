@@ -4,6 +4,7 @@
   class="border border-black rounded-md px-1 py-0.5"
   (change)="changeCategory($event)"
 >
+  <option [selected]="currentCategory() === ''" value="all">All</option>
   @for (category of categories$ | async; track category.id) {
     <option 
       [value]="category.name"

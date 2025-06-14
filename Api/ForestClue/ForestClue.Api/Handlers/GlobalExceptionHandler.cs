@@ -24,7 +24,7 @@ namespace ForestClue.Api.Handlers
                 LoginFailedException => (HttpStatusCode.Unauthorized, exception.Message),
                 UserAlreadyExistsException => (HttpStatusCode.Conflict, exception.Message),
                 RegistrationFailedException => (HttpStatusCode.BadRequest, exception.Message),
-                RefreshTokenException => (HttpStatusCode.Unauthorized, exception.Message),
+                RefreshTokenException => (HttpStatusCode.Forbidden, exception.Message),
                 _ => (HttpStatusCode.InternalServerError, $"An unexpected error occured: {exception.Message}")
             };
         }

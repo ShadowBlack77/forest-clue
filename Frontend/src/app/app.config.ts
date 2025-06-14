@@ -4,9 +4,9 @@ import { provideRouter, withComponentInputBinding, withViewTransitions } from '@
 import { routes } from './app.routes';
 import { ENV_TOKEN } from '@lib/core/env';
 import { Environment } from '../env/environments';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { AuthService } from '@lib/auth';
+import { AuthService, RefreshTokenInterceptor } from '@lib/auth';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { ProductsEffects, productsReducer } from '@lib/forest-clue/products';
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     {
         provide: APP_INITIALIZER,
@@ -36,6 +36,11 @@ export const appConfig: ApplicationConfig = {
     {
         provide: LOCAL_STORAGE_TOKEN,
         useValue: localStorage
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: RefreshTokenInterceptor,
+        multi: true
     },
     provideStore({
         'products': productsReducer,

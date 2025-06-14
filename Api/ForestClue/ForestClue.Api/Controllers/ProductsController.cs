@@ -17,7 +17,28 @@ namespace ForestClue.Api.Controllers
 
             if (!string.IsNullOrWhiteSpace(category) && category != "all")
             {
-                products = products.Where(x => x.Category.Name == category).ToList();
+                switch (category.ToLowerInvariant())
+                {
+                    case "backpacks":
+                        products = products.Where(x => x.CategoryId == 1).ToList();
+                        break;
+
+                    case "shoes":
+                        products = products.Where(x => x.CategoryId == 2).ToList();
+                        break;
+
+                    case "bicycles":
+                        products = products.Where(x => x.CategoryId == 3).ToList();
+                        break;
+
+                    case "equipment":
+                        products = products.Where(x => x.CategoryId == 4).ToList();
+                        break;
+
+                    case "jackets":
+                        products = products.Where(x => x.CategoryId == 5).ToList();
+                        break;
+                } 
             }
 
             products = products
