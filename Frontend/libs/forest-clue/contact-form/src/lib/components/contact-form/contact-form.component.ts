@@ -1,6 +1,8 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ContactFormService } from "../../services/contact-form.service";
+import { take } from "rxjs";
 
 @Component({
   selector: 'lib-contact-form',
@@ -11,6 +13,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
   ]
 })
 export class ContactFormComponent {
+
+  private readonly _contactFormService: ContactFormService = inject(ContactFormService);
 
   protected readonly contactForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -31,7 +35,16 @@ export class ContactFormComponent {
 
   submit(): void {
     if (this.contactForm.valid) {
-      
+      this._contactFormService.send(this.contactForm.getRawValue()).pipe(
+        take(1)
+      ).subscribe({
+        next: () => {
+          console.log('SEND!');
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
     }
   }
 }

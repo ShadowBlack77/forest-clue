@@ -1,5 +1,6 @@
 ﻿using ForestClue.Application.Abstractions;
 using ForestClue.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForestClue.Api.Controllers
@@ -37,6 +38,20 @@ namespace ForestClue.Api.Controllers
             return Ok(products);
         }
 
+        [Authorize(Roles = "Manager")]
+        [HttpPost("create")]
+        public ActionResult Create()
+        {
+            return Ok(); 
+        }
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("update")]
+        public ActionResult Update()
+        {
+            return Ok();
+        }
+
         [HttpGet("categories")]
         public async Task<ActionResult<List<Category>>> GetAllCategories()
         {
@@ -45,12 +60,19 @@ namespace ForestClue.Api.Controllers
             return Ok(categories);
         }
 
+        [Authorize(Roles = "Manager")]
+        [HttpPost("create-category")]
+        public ActionResult CreateCategory()
+        {
+            return Ok();
+        }
+
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetCount()
         {
             List<Product> products = await productService.GetAllAsync();
 
-            return products.Count();
+            return products.Count;
         }
     }
 }

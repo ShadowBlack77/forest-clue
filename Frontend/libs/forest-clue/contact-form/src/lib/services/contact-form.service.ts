@@ -11,7 +11,7 @@ export class ContactFormService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   private readonly _env: EnvConfig = inject(ENV_TOKEN);
 
-  send(): Observable<unknown> {
-    return of();
+  send(contact: any): Observable<unknown> {
+    return this._httpClient.post(`${this._env.apiUrl}/contact`, { to: 'shadowblack77.dev@gmail.com', subject: 'Contact Form', body: `${contact.email}: ${contact.message}` });
   }
 }
