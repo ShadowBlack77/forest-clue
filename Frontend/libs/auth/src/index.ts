@@ -5,6 +5,7 @@ export * from './lib/components/reset-password-form/reset-password-form.componen
 export * from './lib/components/register-form/register-form.component';
 export * from './lib/components/logout-button/logout-button.component';
 export * from './lib/components/account-info/account-info.component';
+export * from './lib/components/google-login-button/google-login-button.component';
 
 // SERVICES
 export * from './lib/services/auth.service';

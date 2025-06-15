@@ -10,19 +10,29 @@ namespace ForestClue.Application.Services
             return await productRepository.GetAllAsync();
         }
 
-        public Task GetCategories()
+        public async Task<List<Product>> GetFeaturedAsync()
         {
+            List<Product> products = await productRepository.GetAllAsync();
+
+            products = products.Where(x => x.Featured).ToList();
+
             throw new NotImplementedException();
         }
 
-        public Task GetFeatured()
+        public async Task<int> GetProductsCount()
         {
-            throw new NotImplementedException();
+            List<Product> products = await productRepository.GetAllAsync();
+
+            return products.Count;
         }
 
-        public Task GetProductsCount()
+        public async Task<int> GetProductsCategoryCountAsync(string category)
         {
-            throw new NotImplementedException();
+            List<Product> products = await productRepository.GetAllAsync();
+
+            products = products.Where(p => p.Category.Name == category).ToList();
+
+            return products.Count;
         }
     }
 }

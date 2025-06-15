@@ -69,7 +69,18 @@ namespace ForestClue.Infrastructure.Processors
 
         public void RemoveAuthTokenCookie(string cookieName)
         {
-            httpContextAccessor.HttpContext?.Response.Cookies.Delete(cookieName);
+            httpContextAccessor.HttpContext.Response.Cookies.Append(
+                cookieName,
+                "",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Expires = DateTimeOffset.UtcNow.AddDays(-1),
+                    IsEssential = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None
+                }
+            );
         }
 
         public ClaimsPrincipal GetClaimsPrincipal()

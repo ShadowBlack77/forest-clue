@@ -75,8 +75,18 @@ namespace ForestClue.Api.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<ActionResult> ResetPasswordAsync()
+        public async Task<ActionResult> ResetPasswordAsync([FromBody] ForgotPasswordRequest forgotPasswordRequest)
         {
+            await accountService.SendResetPasswordLinkAsync(forgotPasswordRequest.Email);
+
+            return Ok();
+        }
+
+        [HttpPost("new-password")]
+        public async Task<ActionResult> NewPasswordAsync([FromBody] ResetPasswordRequest resetPasswordRequest)
+        {
+            await accountService.NewPasswordAsync(resetPasswordRequest.Email, resetPasswordRequest.Token, resetPasswordRequest.Password);
+
             return Ok();
         }
 

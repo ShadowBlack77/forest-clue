@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { LoginFormComponent } from "@lib/auth";
+import { GoogleLoginButtonComponent, LoginFormComponent } from "@lib/auth";
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   imports: [
-    LoginFormComponent
+    LoginFormComponent,
+    GoogleLoginButtonComponent
   ],
   encapsulation: ViewEncapsulation.None
 })

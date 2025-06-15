@@ -17,28 +17,7 @@ namespace ForestClue.Api.Controllers
 
             if (!string.IsNullOrWhiteSpace(category) && category != "all")
             {
-                switch (category.ToLowerInvariant())
-                {
-                    case "backpacks":
-                        products = products.Where(x => x.CategoryId == 1).ToList();
-                        break;
-
-                    case "shoes":
-                        products = products.Where(x => x.CategoryId == 2).ToList();
-                        break;
-
-                    case "bicycles":
-                        products = products.Where(x => x.CategoryId == 3).ToList();
-                        break;
-
-                    case "equipment":
-                        products = products.Where(x => x.CategoryId == 4).ToList();
-                        break;
-
-                    case "jackets":
-                        products = products.Where(x => x.CategoryId == 5).ToList();
-                        break;
-                } 
+                products = products.Where(x => x.Category.Name == category).ToList();
             }
 
             products = products
@@ -52,11 +31,9 @@ namespace ForestClue.Api.Controllers
         [HttpGet("featured")]
         public async Task<ActionResult<List<Product>>> GetFeatured()
         {
-            List<Product> products = await productService.GetAllAsync();
+            List<Product> featuredProducts = await productService.GetFeaturedAsync();
 
-            products = products.Where(x => x.Featured).ToList();
-
-            return Ok(products);
+            return Ok(featuredProducts);
         }
 
         [Authorize(Roles = "Manager")]
@@ -91,9 +68,17 @@ namespace ForestClue.Api.Controllers
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetCount()
         {
-            List<Product> products = await productService.GetAllAsync();
+            int productsCount = await productService.GetProductsCount();
 
-            return products.Count;
+            return Ok(productsCount);
+        }
+
+        [HttpGet("categories/count")]
+        public async Task<ActionResult<int>> GetCategoriesCount([FromQuery] string category)
+        {
+            int categoriesCount = await productService.GetProductsCategoryCountAsync(category);
+
+            return Ok(categoriesCount);
         }
     }
 }

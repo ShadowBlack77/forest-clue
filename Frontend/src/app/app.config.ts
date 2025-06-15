@@ -10,7 +10,7 @@ import { AuthService, RefreshTokenInterceptor } from '@lib/auth';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { ProductsEffects, productsReducer } from '@lib/forest-clue/products';
-import { LOCAL_STORAGE_TOKEN } from '@lib/core/tokens';
+import { LOCAL_STORAGE_TOKEN, WINDOW_TOKEN } from '@lib/core/tokens';
 import { CartEffects, cartReducer } from '@lib/forest-clue/cart';
 
 export const appConfig: ApplicationConfig = {
@@ -41,6 +41,10 @@ export const appConfig: ApplicationConfig = {
         provide: HTTP_INTERCEPTORS,
         useClass: RefreshTokenInterceptor,
         multi: true
+    },
+    {
+        provide: WINDOW_TOKEN,
+        useValue: window
     },
     provideStore({
         'products': productsReducer,

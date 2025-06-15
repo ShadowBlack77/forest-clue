@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from "@angular/common";
-import { Component, effect, inject, input, InputSignal, OnDestroy, OnInit, signal, WritableSignal } from "@angular/core";
+import { Component, effect, inject, input, InputSignal, OnDestroy, signal, WritableSignal } from "@angular/core";
 import { CartButtonComponent } from "@lib/forest-clue/cart";
 import {  combineLatest, Observable, Subject, take, takeUntil } from "rxjs";
 import { Product } from "../../models/product.model";
@@ -8,6 +8,7 @@ import { ProductsState } from "../../store/products.reducer";
 import { selectProducts, selectProductsCount } from "../../store/products.selectors";
 import { loadProducts } from "../../store/products.actions";
 import { toObservable } from '@angular/core/rxjs-interop';
+import { ProductsService } from "../../services/products.service";
 
 @Component({
   selector: 'lib-products-list',
@@ -20,6 +21,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class ProductsListComponent implements OnDestroy {
 
+  private readonly _productsService: ProductsService = inject(ProductsService);
   private readonly _store: Store<ProductsState> = inject(Store);
   private readonly _destroy$: Subject<void> = new Subject<void>();
 
@@ -42,7 +44,23 @@ export class ProductsListComponent implements OnDestroy {
         })
       );
     });
+
+    toObservable(this.selectedPageSize).pipe(
+      takeUntil(this._destroy$)
+    ).subscribe({
+      next: () => {
+        this.currentPage.set(1);
+      }
+    });
     
+    toObservable(this.selectedCategory).pipe(
+      takeUntil(this._destroy$)
+    ).subscribe({
+      next: () => {
+        this.currentPage.set(1);
+      }
+    });
+
     toObservable(this.selectedPage).pipe(
       takeUntil(this._destroy$)
     ).subscribe({
@@ -61,12 +79,12 @@ export class ProductsListComponent implements OnDestroy {
   next(): void {
     combineLatest([
       this.productsCount$,
-      this.products$
+      this._productsService.getCategoriesCount(this.selectedCategory())
     ]).pipe(
       take(1)
     ).subscribe({
-      next: ([productsCount, products]) => {
-        if (this.currentPage() < (this.selectedCategory() === 'all' ? productsCount : products.length) / this.selectedPageSize()) {
+      next: ([productsCount, categoryCount]) => {
+        if (this.currentPage() < (this.selectedCategory() === 'all' ? productsCount : categoryCount) / this.selectedPageSize()) {
           this.currentPage.update((prev) => prev += 1);
         }
       }

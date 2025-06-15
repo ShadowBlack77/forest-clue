@@ -8,7 +8,7 @@ namespace ForestClue.Infrastructure.Repositories
     {
         public async Task<List<Product>> GetAllAsync()
         {
-            return await applicationDbContext.Products.ToListAsync();
+            return await applicationDbContext.Products.Include(p => p.Category).ToListAsync();
         }
     }
 }

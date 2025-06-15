@@ -5,8 +5,8 @@ namespace ForestClue.Application.Abstractions
     public interface IProductService
     {
         Task<List<Product>> GetAllAsync();
-        Task GetFeatured();
-        Task GetProductsCount();
-        Task GetCategories();
+        Task<List<Product>> GetFeaturedAsync();
+        Task<int> GetProductsCount();
+        Task<int> GetProductsCategoryCountAsync(string category);
     }
 }

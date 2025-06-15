@@ -48,7 +48,12 @@ builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
     options.Password.RequiredLength = 8;
 
     options.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<ApplicationDbContext>();
+}).AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+    options.TokenLifespan = TimeSpan.FromMinutes(5)
+);
 
 builder.Services.AddScoped<IEmailProcessor, EmailProcessor>();
 builder.Services.AddScoped<IAuthTokenProcessor, AuthTokenProcessor>();

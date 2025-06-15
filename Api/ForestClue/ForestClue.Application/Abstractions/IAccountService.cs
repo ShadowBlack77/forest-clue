@@ -12,6 +12,7 @@ namespace ForestClue.Application.Abstractions
         Task LogoutAsync();
         Task LoginWithGoogleAsync(ClaimsPrincipal claimsPrincipal);
         Task<UserProfileDto> GetProfileAsync();
-        Task SendResetPasswordLinkAsync();
+        Task SendResetPasswordLinkAsync(string email);
+        Task NewPasswordAsync(string email, string token, string newPassword);
     }
 }

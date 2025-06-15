@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ForestClue.Domain.Entities
 {
@@ -12,6 +13,8 @@ namespace ForestClue.Domain.Entities
         public required string ImageUrl { get; init; }
         public long CategoryId { get; init; }
         public bool Featured { get; init; }
-        public required Category Category { get; init; }
+
+        [JsonIgnore]
+        public Category Category { get; set; }
     }
 }

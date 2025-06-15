@@ -28,4 +28,8 @@ export class ProductsService {
   getCategories(): Observable<Category[]> {
     return this._httpClient.get<Category[]>(`${this._env.apiUrl}/products/categories`);
   }
+
+  getCategoriesCount(category: string): Observable<number> {
+    return this._httpClient.get<number>(`${this._env.apiUrl}/products/categories/count?category=${category}`);
+  }
 }

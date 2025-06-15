@@ -14,7 +14,7 @@ export class RoleGuard {
   canActivate(): Observable<boolean> {
     return this._authService.user$.pipe(
       map((user) => {
-        if (!user || user.role !== 'admin') {
+        if (!user || user.role !== 'Manager') {
           this._router.navigateByUrl('/');
 
           return false;

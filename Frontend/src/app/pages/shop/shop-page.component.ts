@@ -13,7 +13,7 @@ import { CategoriesListComponent, ProductsListComponent } from "@lib/forest-clue
 })
 export class ShopPageComponent implements OnInit {
 
-  protected readonly selectedPageSize: WritableSignal<number> = signal(5);
+  protected readonly selectedPageSize: WritableSignal<number> = signal(8);
   protected readonly selectedPage: WritableSignal<number> = signal(1);
   protected readonly selectedCategory: WritableSignal<string> = signal('all');
 

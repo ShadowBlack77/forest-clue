@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace ForestClue.Application.Services
 {
-    public class AccountService(IAuthTokenProcessor authTokenProcessor, UserManager<User> userManager, IUserRepository userRepository) : IAccountService
+    public class AccountService(IAuthTokenProcessor authTokenProcessor, UserManager<User> userManager, IUserRepository userRepository, IEmailProcessor emailProcessor) : IAccountService
     {
         public async Task LoginAsync(LoginRequest loginRequest)
         {
@@ -196,18 +196,47 @@ namespace ForestClue.Application.Services
 
             var user = await userRepository.GetUserByIdAsync(userId);
 
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException("User not found");
+            }
+
+            var roles = await userManager.GetRolesAsync(user);
+
             var userProfile = new UserProfileDto
             {
                 Email = user.Email,
-                Username = user.UserName
+                Username = user.UserName,
+                Role = roles.FirstOrDefault()
             };
 
             return userProfile;
         }
 
-        public async Task SendResetPasswordLinkAsync()
+        public async Task SendResetPasswordLinkAsync(string email)
         {
+            var user = await userManager.FindByEmailAsync(email);
 
+            if (user == null)
+            {
+                throw new Exception("Invalid request");
+            }
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            emailProcessor.SendEmail(email, "Reset Password", $"http://localhost:4200/auth/account/reset-password?token={token}&email={email}");
+        }
+
+        public async Task NewPasswordAsync(string email, string token, string newPassword)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new Exception("Invalid request");
+            }
+
+            await userManager.ResetPasswordAsync(user, token, newPassword);
         }
 
         private string GetIdentityRoleName(Role role)
