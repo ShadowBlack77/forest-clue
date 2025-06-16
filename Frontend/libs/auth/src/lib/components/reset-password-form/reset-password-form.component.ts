@@ -16,7 +16,8 @@ export class ResetPasswordFormComponent {
 
   private readonly _authService: AuthService = inject(AuthService);
 
-    protected readonly isFormSubmitted: WritableSignal<boolean> = signal(false);
+  protected readonly isFormSubmitted: WritableSignal<boolean> = signal(false);
+  protected readonly resetPasswordMessage: WritableSignal<string> = signal('');
 
   protected readonly resetPasswordForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -36,9 +37,11 @@ export class ResetPasswordFormComponent {
         take(1)
       ).subscribe({
         next: () => {
+          this.resetPasswordMessage.set('Message sent! Average waiting time is 5 minutes.');
           this.isFormSubmitted.set(false);
         },
         error: () => {
+          this.resetPasswordMessage.set('Error sending message. Please try again later.');
           this.isFormSubmitted.set(false);
         }
       });

@@ -77,6 +77,10 @@ export class AuthService {
     return this._httpClient.post(`${this._env.apiUrl}/auth/reset-password`, resetPassword);
   }
 
+  newPassword(newPassword: any): Observable<unknown> {
+    return this._httpClient.post(`${this._env.apiUrl}/auth/new-password`, newPassword);
+  }
+
   googleLogin(): void {
     this._window.location.href = `${this._env.apiUrl}/auth/login/google?returnUrl=http://localhost:4200`
   }

@@ -2,3 +2,12 @@
   class="bg-black w-full text-white py-1 rounded-md"
   (click)="addToCart()"
 >Add To Cart</button>
+
+<div class="fixed top-0 text-white right-0 border rounded-md border-black m-4 bg-black px-2 py-1 transition-all ease-in-out opacity-0" #addToCartToast>
+  <div class="border-b mb-3">
+    <h2 class="text-xl">Success!</h2>
+  </div>
+  <div>
+    <p>Product successfully added to cart!</p>
+  </div>
+</div>

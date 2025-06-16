@@ -3,7 +3,7 @@ import { Cart } from "../model/cart.model";
 import { ENV_TOKEN, EnvConfig } from "@lib/core/env";
 import { HttpClient } from "@angular/common/http";
 import { LOCAL_STORAGE_TOKEN, LocalStorage, LocalStorageService } from "@lib/core/tokens";
-import { map, Observable, of, take } from "rxjs";
+import { map, Observable, of, take, tap } from "rxjs";
 import { Response } from "@lib/core/http";
 
 export interface LoadCartStrategyModel {
@@ -21,11 +21,8 @@ export class LoadCartStrategy implements LoadCartStrategyModel {
   private readonly _localStorage: LocalStorage = inject(LocalStorageService);
 
   authLoadCart(): Observable<Cart> {
-    return this._httpClient.get<Response<Cart>>(`${this._env.apiUrl}/cart`).pipe(
+    return this._httpClient.get<Cart>(`${this._env.apiUrl}/cart`, { withCredentials: true }).pipe(
       take(1),
-      map((cartResponse) => {
-        return cartResponse.content;
-      })
     )
   }
 

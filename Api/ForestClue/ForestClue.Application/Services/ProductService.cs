@@ -16,7 +16,7 @@ namespace ForestClue.Application.Services
 
             products = products.Where(x => x.Featured).ToList();
 
-            throw new NotImplementedException();
+            return products;
         }
 
         public async Task<int> GetProductsCount()

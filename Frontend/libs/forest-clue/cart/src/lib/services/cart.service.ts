@@ -33,7 +33,7 @@ export class CartService {
       take(1),
       switchMap((user) => {
         return user ? 
-          this._addToCartStrategy.authAddToCart(product) :
+          this._addToCartStrategy.authAddToCart({ productId: product.id }) :
           this._addToCartStrategy.guestAddToCart(product)
       })
     );

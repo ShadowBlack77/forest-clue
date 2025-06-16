@@ -7,10 +7,11 @@ using ForestClue.Domain.Exceptions;
 using ForestClue.Domain.Requests;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using System.Web;
 
 namespace ForestClue.Application.Services
 {
-    public class AccountService(IAuthTokenProcessor authTokenProcessor, UserManager<User> userManager, IUserRepository userRepository, IEmailProcessor emailProcessor) : IAccountService
+    public class AccountService(IAuthTokenProcessor authTokenProcessor, UserManager<User> userManager, IUserRepository userRepository, IEmailProcessor emailProcessor, ICartService cartService) : IAccountService
     {
         public async Task LoginAsync(LoginRequest loginRequest)
         {
@@ -63,6 +64,18 @@ namespace ForestClue.Application.Services
             }
 
             await userManager.AddToRoleAsync(user, GetIdentityRoleName(Role.User));
+
+            var cart = new Cart
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                Currency = "USD",
+                UpdateAt = DateTime.UtcNow,
+                TotalPrice = 0,
+                TotalQuantity = 0
+            };
+
+            await cartService.CreateCartAsync(cart);
         }
 
         public async Task LogoutAsync()
@@ -223,8 +236,9 @@ namespace ForestClue.Application.Services
             }
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = HttpUtility.UrlEncode(token);
 
-            emailProcessor.SendEmail(email, "Reset Password", $"http://localhost:4200/auth/account/reset-password?token={token}&email={email}");
+            emailProcessor.SendEmail(email, "Reset Password", $"http://localhost:4200/auth/account/reset-password?token={encodedToken}&email={email}");
         }
 
         public async Task NewPasswordAsync(string email, string token, string newPassword)

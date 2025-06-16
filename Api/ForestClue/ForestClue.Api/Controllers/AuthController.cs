@@ -87,7 +87,7 @@ namespace ForestClue.Api.Controllers
         {
             await accountService.NewPasswordAsync(resetPasswordRequest.Email, resetPasswordRequest.Token, resetPasswordRequest.Password);
 
-            return Ok();
+            return NoContent();
         }
 
         [Authorize]

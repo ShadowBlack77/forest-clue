@@ -7,7 +7,7 @@ import { Product } from "@lib/forest-clue/products";
 import { Cart } from "../model/cart.model";
 
 export interface AddToCartStrategyModel {
-  authAddToCart(product: Product): Observable<unknown>;
+  authAddToCart(product: { productId: number }): Observable<unknown>;
   guestAddToCart(product: Product): Observable<unknown>;
 }
 
@@ -20,8 +20,8 @@ export class AddToCartStrategy implements AddToCartStrategyModel {
   private readonly _httpClient: HttpClient = inject(HttpClient);
   private readonly _localStorage: LocalStorage = inject(LocalStorageService);
 
-  authAddToCart(product: Product): Observable<unknown> {
-    return this._httpClient.put(`${this._env.apiUrl}/cart`, product);
+  authAddToCart(product: { productId: number }): Observable<unknown> {
+    return this._httpClient.put(`${this._env.apiUrl}/cart/add-product`, product, { withCredentials: true });
   }
 
   guestAddToCart(product: Product): Observable<unknown> {

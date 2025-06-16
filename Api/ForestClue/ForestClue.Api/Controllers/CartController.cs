@@ -1,23 +1,31 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ForestClue.Application.Abstractions;
+using ForestClue.Domain.Entities;
+using ForestClue.Domain.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ForestClue.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CartController : ControllerBase
+    public class CartController(ICartService cartService) : ControllerBase
     {
         [Authorize]
         [HttpGet]
-        public ActionResult Load()
+        public async Task<ActionResult> Load()
         {
-            return Ok();
+            var cart = await cartService.LoadCartAsync();
+
+            return Ok(cart);
         }
 
         [Authorize]
         [HttpPut("add-product")]
-        public ActionResult AddProduct()
+        public async Task<ActionResult> AddProduct([FromBody] CartItemRequest cartItemRequest)
         {
+            await cartService.AddToCartAsync(cartItemRequest.ProductId);
+
             return Ok();
         }
 

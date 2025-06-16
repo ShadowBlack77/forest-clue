@@ -6,6 +6,7 @@ namespace ForestClue.Domain.Entities
     {
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiresAtUtc { get; set; }
+        public Cart? Cart { get; set; }
 
         public static User Create(string email, string username)
         {

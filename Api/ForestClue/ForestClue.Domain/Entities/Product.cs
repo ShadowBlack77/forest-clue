@@ -16,5 +16,6 @@ namespace ForestClue.Domain.Entities
 
         [JsonIgnore]
         public Category Category { get; set; }
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }
