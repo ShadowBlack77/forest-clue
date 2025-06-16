@@ -6,5 +6,6 @@ namespace ForestClue.Application.Abstractions
     {
         Task<Cart?> GetCartByUserIdAsync(Guid userId);
         Task CreateCartAsync(Cart cart);
+        Task AddItemToCartAsync(Guid userId, long productId);
     }
 }

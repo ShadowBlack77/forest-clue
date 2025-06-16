@@ -1,4 +1,5 @@
 ﻿using ForestClue.Application.Abstractions;
+using ForestClue.Domain.Dtos;
 using ForestClue.Domain.Entities;
 using ForestClue.Domain.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +18,26 @@ namespace ForestClue.Api.Controllers
         {
             var cart = await cartService.LoadCartAsync();
 
-            return Ok(cart);
+            var cartDto = new CartDto
+            {
+                TotalPrice = cart.TotalPrice,
+                TotalQuantity = cart.TotalQuantity,
+                Currency = cart.Currency,
+                UpdatedAt = DateTime.UtcNow,
+                Items = cart.Items.Select(i => new CartItemDto
+                { 
+                    Id = i.ProductId,
+                    Name = i.Product.Name,
+                    Description = i.Product.Description,
+                    Price = i.Product.Price,
+                    InStock = i.Product.InStock,
+                    ImageUrl = i.Product.ImageUrl,
+                    Featured = i.Product.Featured,
+                    Quantity = i.Quantity
+                }).ToList()
+            };
+
+            return Ok(cartDto);
         }
 
         [Authorize]

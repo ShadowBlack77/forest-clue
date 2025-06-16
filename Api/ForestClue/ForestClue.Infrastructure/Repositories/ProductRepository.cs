@@ -10,5 +10,10 @@ namespace ForestClue.Infrastructure.Repositories
         {
             return await applicationDbContext.Products.Include(p => p.Category).ToListAsync();
         }
+
+        public async Task<Product?> GetOneByIdAsync(long productId)
+        {
+            return await applicationDbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
+        }
     }
 }

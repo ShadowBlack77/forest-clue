@@ -6,11 +6,18 @@ using System.Security.Claims;
 
 namespace ForestClue.Application.Services
 {
-    public class CartService(ICartRepository cartRepository, IAuthTokenProcessor authTokenProcessor) : ICartService
+    public class CartService(ICartRepository cartRepository, IProductRepository productRepository, IAuthTokenProcessor authTokenProcessor) : ICartService
     {
-        public Task AddToCartAsync(long productId)
+        public async Task AddToCartAsync(long productId)
         {
-            throw new NotImplementedException();
+            var claimsPrincipal = authTokenProcessor.GetClaimsPrincipal();
+
+            if (claimsPrincipal == null || !Guid.TryParse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value, out Guid userId))
+            {
+                throw new UnauthorizedAccessException("User is not logged in");
+            }
+
+            await cartRepository.AddItemToCartAsync(userId, productId);
         }
 
         public async Task CreateCartAsync(Cart cart)

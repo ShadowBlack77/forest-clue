@@ -1,4 +1,6 @@
-﻿namespace ForestClue.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace ForestClue.Domain.Entities
 {
     public class Cart
     {

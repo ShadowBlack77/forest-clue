@@ -40,6 +40,11 @@ namespace ForestClue.Infrastructure
                 .WithMany(p => p.CartItems)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<CartItem>()
+            .HasOne(ci => ci.Cart)
+            .WithMany(c => c.Items)
+            .HasForeignKey(ci => ci.CartId);
+
             modelBuilder.Entity<IdentityRole<Guid>>()
                 .HasData(new List<IdentityRole<Guid>>
                 {
