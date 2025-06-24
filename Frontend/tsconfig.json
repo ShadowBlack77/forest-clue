@@ -45,6 +45,9 @@
       "@lib/forest-clue/contact-form": [
         "./libs/forest-clue/contact-form/src/index.ts",
       ],
+      "@lib/forest-clue/admin": [
+        "./libs/forest-clue/admin/src/index.ts"
+      ],
       "@lib/shared/header": [
         "./libs/shared/header/src/index.ts"
       ],
