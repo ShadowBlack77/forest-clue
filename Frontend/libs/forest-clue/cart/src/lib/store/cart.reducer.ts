@@ -52,5 +52,55 @@ export const cartReducer = createReducer(
       ...state,
       cart: updatedCart
     }
+  }),
+  on(cartActions.increaseQuantity, (state, { id }) => {
+
+    const currentCart = state.cart;
+    const items = state.cart.items;
+
+    const exists = items.find((item) => item.id === id);
+
+    const updatedItems = exists ? items.map((item) => {
+      return item.id === id ? 
+      { ...item, quantity: item.quantity + 1 } :
+      item
+    }) : items;
+
+    const updatedCart: Cart = {
+      ...currentCart,
+      items: updatedItems,
+      totalQuantity: updatedItems.reduce((sum, i) => sum + i.quantity, 0),
+      totalPrice: updatedItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
+    }
+
+    return {
+      ...state,
+      cart: updatedCart
+    }
+  }),
+  on(cartActions.decreaseQuantity, (state, { id }) => {
+
+    const currentCart = state.cart;
+    const items = state.cart.items;
+
+    const exists = items.find((item) => item.id === id);
+
+    const updatedItems = exists ? items.map((item) => {
+      return item.id === id ? 
+      { ...item, quantity: item.quantity - 1 } :
+      item
+    }).filter((item) => item.quantity > 0) : items;
+
+    const updatedCart: Cart = {
+      ...currentCart,
+      items: updatedItems,
+      totalQuantity: updatedItems.reduce((sum, i) => sum + i.quantity, 0),
+      totalPrice: updatedItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
+    }
+
+    return {
+      ...state,
+      cart: updatedCart
+    }
   })
 );

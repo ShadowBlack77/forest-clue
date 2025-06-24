@@ -42,6 +42,9 @@ namespace ForestClue.Infrastructure.Repositories
                 });
             }
 
+            cart.TotalQuantity = cart.Items.Sum(i => i.Quantity);
+            cart.TotalPrice = cart.Items.Sum(i => i.Quantity * i.Product.Price);
+
             cart.UpdateAt = DateTime.UtcNow;
             await applicationDbContext.SaveChangesAsync();
         }

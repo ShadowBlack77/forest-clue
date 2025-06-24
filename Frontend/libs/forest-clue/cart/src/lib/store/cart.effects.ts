@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { CartService } from "../services/cart.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { addToCart, addToCartFailure, addToCartSuccess, loadCart, loadCartFailure, loadCartSuccess } from "./cart.actions";
+import { addToCart, addToCartFailure, addToCartSuccess, decreaseQuantity, decreaseQuantityFailure, decreaseQuantitySuccess, increaseQuantity, increaseQuantityFailure, increaseQuantitySuccess, loadCart, loadCartFailure, loadCartSuccess } from "./cart.actions";
 import { catchError, map, of, switchMap } from "rxjs";
 
 @Injectable({
@@ -39,6 +39,38 @@ export class CartEffects {
           }),
           catchError((error) => {
             return of(addToCartFailure({ error }))
+          })
+        )
+      })
+    )
+  });
+
+  increaseQuantity$ = createEffect(() => {
+    return this._acitons$.pipe(
+      ofType(increaseQuantity),
+      switchMap(({ id }) => {
+        return this._cartService.updateCart(id, 'increase').pipe(
+          map(() => {
+            return increaseQuantitySuccess();
+          }),
+          catchError((error) => {
+            return of(increaseQuantityFailure({ error }));
+          })
+        )
+      })
+    )
+  });
+
+  decreaseQuantity$ = createEffect(() => {
+    return this._acitons$.pipe(
+      ofType(decreaseQuantity),
+      switchMap(({ id }) => {
+        return this._cartService.updateCart(id, 'decrease').pipe(
+          map(() => {
+            return decreaseQuantitySuccess();
+          }),
+          catchError((error) => {
+            return of(decreaseQuantityFailure({ error }));
           })
         )
       })

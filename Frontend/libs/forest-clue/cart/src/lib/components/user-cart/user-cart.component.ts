@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { CartState } from "../../store/cart.reducer";
 import { selectCart } from "../../store/cart.selectors";
 import { CommonModule, CurrencyPipe, NgOptimizedImage } from "@angular/common";
+import { decreaseQuantity, increaseQuantity } from "../../store/cart.actions";
 
 @Component({
   selector: 'lib-user-cart',
@@ -21,12 +22,12 @@ export class UserCartComponent {
 
   protected readonly cart$: Observable<Cart> = this._store.select(selectCart);
 
-  increaseQuantity(): void {
-
+  increaseQuantity(id: number): void {
+    this._store.dispatch(increaseQuantity({ id }));
   }
 
-  decreaseQuantity(): void {
-
+  decreaseQuantity(id: number): void {
+    this._store.dispatch(decreaseQuantity({ id }))
   }
 
   removeFromCart(): void {

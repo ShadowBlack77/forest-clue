@@ -28,11 +28,11 @@
                 <p>{{ cartItem.price | currency }} (Per unit)</p>
               </div>
               <div class="px-1 flex items-center">
-                <button (click)="decreaseQuantity()">
+                <button (click)="decreaseQuantity(cartItem.id)">
                   <i class="bi bi-chevron-left"></i>
                 </button>
                 <p class="mx-2 text-xl">{{ cartItem.quantity }}</p>
-                <button (click)="increaseQuantity()">
+                <button (click)="increaseQuantity(cartItem.id)">
                   <i class="bi bi-chevron-right"></i>
                 </button>
               </div>
