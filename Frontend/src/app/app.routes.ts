@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard, ProtectedGuard, RoleGuard } from '@lib/auth';
 import { LoadCartResolver } from '@lib/forest-clue/cart';
+import { SaveOrderResolver } from '@lib/forest-clue/orders';
 import { LoadProductsResolver } from '@lib/forest-clue/products';
 
 export const routes: Routes = [
@@ -79,6 +80,16 @@ export const routes: Routes = [
       {
         path: 'account/reset-password',
         loadComponent: () => import('./pages/auth/account/reset-password/reset-password-page.component').then((c) => c.ResetPasswordPageComponent)
+      }
+    ]
+  },
+  {
+    path: 'orders',
+    children: [
+      {
+        resolve: [SaveOrderResolver],
+        path: 'success',
+        loadComponent: () => import('./pages/orders/success/success-page.component').then((c) => c.SuccessPageComponent)
       }
     ]
   },

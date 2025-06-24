@@ -11,5 +11,6 @@ namespace ForestClue.Application.Abstractions
         Task UpdateCartQuantityAsync(Guid userId, long id, string type);
         Task DeleteCartItemAsync(Guid userId, long id);
         Task SaveCartItemsAsync(Guid userId, List<CartItemDto> cartItems);
+        Task ClearCartAsync(Guid userId);
     }
 }

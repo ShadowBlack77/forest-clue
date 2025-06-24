@@ -8,6 +8,9 @@ export * from './lib/services/cart.service';
 // RESOLVERS
 export * from './lib/resolver/load-cart.resolver';
 
+// MODELS
+export * from './lib/model/cart-item.model';
+
 // STORE
 export * from './lib/store/cart.reducer';
 export * from './lib/store/cart.effects';

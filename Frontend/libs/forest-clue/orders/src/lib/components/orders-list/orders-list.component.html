@@ -1,0 +1,13 @@
+<div>
+  <div class="pb-3 border-b">
+    <h2 class="text-4xl">User Orders</h2>
+  </div>
+  <div class="py-4">
+    @for (order of orders$ | async; track order.id) {
+      <div class="pb-3 border-b w-full">
+        <h3 class="text-xl">OrderID: {{ order.id }}</h3>
+        <p>{{ order.totalAmount | currency }} | {{ order.createdAt }}<p>
+      </div>
+    }
+  </div>
+</div>

@@ -39,6 +39,9 @@
       "@lib/forest-clue/cart": [
         "./libs/forest-clue/cart/src/index.ts"
       ],
+      "@lib/forest-clue/orders": [
+        "./libs/forest-clue/orders/src/index.ts"
+      ],
       "@lib/forest-clue/contact-form": [
         "./libs/forest-clue/contact-form/src/index.ts",
       ],

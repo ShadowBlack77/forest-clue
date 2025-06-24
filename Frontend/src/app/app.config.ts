@@ -30,7 +30,8 @@ export const appConfig: ApplicationConfig = {
     {
         provide: ENV_TOKEN,
         useValue: {
-            apiUrl: Environment.apiUrl
+            apiUrl: Environment.apiUrl,
+            stripePublicKey: Environment.stripePublicKey
         }
     },
     {
@@ -48,7 +49,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideStore({
         'products': productsReducer,
-        'cart': cartReducer
+        'cart': cartReducer,
     }),
     provideEffects([
         ProductsEffects,

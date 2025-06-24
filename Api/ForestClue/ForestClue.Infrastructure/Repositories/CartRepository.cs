@@ -50,6 +50,26 @@ namespace ForestClue.Infrastructure.Repositories
             await applicationDbContext.SaveChangesAsync();
         }
 
+        public async Task ClearCartAsync(Guid userId)
+        {
+            var cart = await applicationDbContext.Cart
+                .Include(x => x.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (cart is null)
+            {
+                throw new Exception("Cart not found");
+            }
+
+            applicationDbContext.CartItems.RemoveRange(cart.Items);
+            cart.Items.Clear();
+            cart.TotalPrice = 0;
+            cart.TotalQuantity = 0;
+
+            await applicationDbContext.SaveChangesAsync();
+        }
+
         public async Task CreateCartAsync(Cart cart)
         {
             applicationDbContext.Add(cart);

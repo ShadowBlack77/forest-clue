@@ -22,7 +22,7 @@ export class LoadCartStrategy implements LoadCartStrategyModel {
 
   authLoadCart(): Observable<Cart> {
     return this._httpClient.get<Cart>(`${this._env.apiUrl}/cart`, { withCredentials: true }).pipe(
-      take(1),
+      take(1)
     )
   }
 

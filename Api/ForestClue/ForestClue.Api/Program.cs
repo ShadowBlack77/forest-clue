@@ -33,6 +33,8 @@ builder.Services.Configure<JwtOptions>(
     builder.Configuration.GetSection(JwtOptions.JwtOptionsKey));
 builder.Services.Configure<EmailOptions>(
     builder.Configuration.GetSection(EmailOptions.EmailOptionsKey));
+builder.Services.Configure<StripeOptions>(
+    builder.Configuration.GetSection(StripeOptions.StripeOptionsKey));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -57,6 +59,8 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 
 builder.Services.AddScoped<IEmailProcessor, EmailProcessor>();
 builder.Services.AddScoped<IAuthTokenProcessor, AuthTokenProcessor>();
+builder.Services.AddScoped<IStripeProcessor, StripeProcessor>();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -66,6 +70,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IStripeService, StripeService>();
+builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -6,6 +6,7 @@ import { CartState } from "../../store/cart.reducer";
 import { selectCart } from "../../store/cart.selectors";
 import { CommonModule, CurrencyPipe, NgOptimizedImage } from "@angular/common";
 import { decreaseQuantity, increaseQuantity, removeProductFromCart } from "../../store/cart.actions";
+import { OrderButtonComponent } from "@lib/forest-clue/orders";
 
 @Component({
   selector: 'lib-user-cart',
@@ -13,7 +14,8 @@ import { decreaseQuantity, increaseQuantity, removeProductFromCart } from "../..
   imports: [
     CommonModule,
     NgOptimizedImage,
-    CurrencyPipe
+    CurrencyPipe,
+    OrderButtonComponent
   ]
 })
 export class UserCartComponent {
@@ -27,7 +29,7 @@ export class UserCartComponent {
   }
 
   decreaseQuantity(id: number): void {
-    this._store.dispatch(decreaseQuantity({ id }))
+    this._store.dispatch(decreaseQuantity({ id }));
   }
 
   removeFromCart(id: number): void {

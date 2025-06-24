@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ForestClue.Application.Abstractions;
+using ForestClue.Domain.Entities;
+using ForestClue.Domain.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForestClue.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController(IStripeService stripeService, IOrderService orderService) : ControllerBase
     {
         [Authorize(Roles = "Manager")]
         [HttpGet]
@@ -16,9 +19,29 @@ namespace ForestClue.Api.Controllers
 
         [Authorize]
         [HttpGet("user")]
-        public ActionResult GetByUser()
+        public async Task<ActionResult<List<Order>>> GetByUser()
         {
-            return Ok("Get orders via user");
+            var userOrders = await orderService.GetOrdersByUserIdAsync();
+
+            return Ok(userOrders);
+        }
+
+        [Authorize]
+        [HttpPost("create-checkout-session")]
+        public ActionResult CreateCheckoutSession([FromBody] SaveCartItemsRequest saveCartItemsRequest)
+        {
+            string sessionId = stripeService.CreateCheckoutSession(saveCartItemsRequest.CartItems);
+
+            return Ok(new { sessionId });
+        }
+
+        [Authorize]
+        [HttpPost("checkout-session")]
+        public async Task<ActionResult> CheckoutSession([FromBody] CheckoutSessionRequest checkoutSessionRequest)
+        {
+            await stripeService.CheckoutSessionAsync(checkoutSessionRequest.SessionId);
+
+            return Ok();
         }
     }
 }
