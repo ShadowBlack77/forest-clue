@@ -5,7 +5,7 @@ import { Store } from "@ngrx/store";
 import { CartState } from "../../store/cart.reducer";
 import { selectCart } from "../../store/cart.selectors";
 import { CommonModule, CurrencyPipe, NgOptimizedImage } from "@angular/common";
-import { decreaseQuantity, increaseQuantity } from "../../store/cart.actions";
+import { decreaseQuantity, increaseQuantity, removeProductFromCart } from "../../store/cart.actions";
 
 @Component({
   selector: 'lib-user-cart',
@@ -30,7 +30,7 @@ export class UserCartComponent {
     this._store.dispatch(decreaseQuantity({ id }))
   }
 
-  removeFromCart(): void {
-
+  removeFromCart(id: number): void {
+    this._store.dispatch(removeProductFromCart({ id }));
   }
 }

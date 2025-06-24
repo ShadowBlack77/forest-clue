@@ -3,7 +3,7 @@
     <div class="border px-4">
       @for (cartItem of cart.items; track cartItem.id) {
         <div class="flex p-4 border-b">
-          <div>
+          <div class="me-3">
             <img 
               [ngSrc]="cartItem.imageUrl"
               [align]="cartItem.name"
@@ -18,7 +18,7 @@
                 <p>{{ cartItem.description }}</p>
               </div>
               <div>
-                <button class="text-lg" (click)="removeFromCart()">
+                <button class="text-lg" (click)="removeFromCart(cartItem.id)">
                   <i class="bi bi-x"></i>
                 </button>
               </div>

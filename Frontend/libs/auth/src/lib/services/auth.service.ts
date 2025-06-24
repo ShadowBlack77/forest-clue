@@ -1,20 +1,25 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ENV_TOKEN, EnvConfig } from "@lib/core/env";
-import { BehaviorSubject, map, Observable, of, switchMap, take } from "rxjs";
+import { BehaviorSubject, map, Observable, of, switchMap, take, tap } from "rxjs";
 import { User } from "../models/user.model";
 import { Login } from "../models/login.model";
 import { Register } from "../models/register.model";
-import { Window, WINDOW_TOKEN } from "@lib/core/tokens";
+import { LocalStorageService, Window, WINDOW_TOKEN } from "@lib/core/tokens";
+import { Store } from "@ngrx/store";
+import { CartState, selectCart } from "@lib/forest-clue/cart";
+import { loadCart, saveCartItems } from "../../../../forest-clue/cart/src/lib/store/cart.actions";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private readonly _store: Store<CartState> = inject(Store);
   private readonly _httpClient: HttpClient = inject(HttpClient);
   private readonly _env: EnvConfig = inject(ENV_TOKEN);
   private readonly _window: Window = inject(WINDOW_TOKEN);
+  private readonly _localStorage: LocalStorageService = inject(LocalStorageService)
 
   readonly user$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
@@ -44,8 +49,20 @@ export class AuthService {
       switchMap(() => {
         return this.profile().pipe(
           take(1),
-          map((user) => {
+          switchMap((user) => {
             this.user$.next(user);
+
+            return this._store.select(selectCart).pipe(
+              take(1),
+              switchMap((cart) => {
+                return of(this._store.dispatch(saveCartItems({ cartItems: cart.items }))).pipe(
+                  tap(() => {
+                    this._localStorage.removeItem('cart');
+                    this._store.dispatch(loadCart());
+                  })
+                );
+              })
+            )
           })
         )
       })
@@ -61,6 +78,7 @@ export class AuthService {
       take(1),
       map(() => {
         this.user$.next(null);
+        this._store.dispatch(loadCart());
       })
     );
   }

@@ -1,10 +1,8 @@
 ﻿using ForestClue.Application.Abstractions;
 using ForestClue.Domain.Dtos;
-using ForestClue.Domain.Entities;
 using ForestClue.Domain.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace ForestClue.Api.Controllers
 {
@@ -41,6 +39,15 @@ namespace ForestClue.Api.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> SaveCartItems([FromBody] SaveCartItemsRequest saveCartItemsRequest)
+        {
+            await cartService.SaveCartItemsAsync(saveCartItemsRequest.CartItems);
+
+            return Ok();
+        }
+
+        [Authorize]
         [HttpPut("add-product")]
         public async Task<ActionResult> AddProduct([FromBody] CartItemRequest cartItemRequest)
         {
@@ -50,16 +57,20 @@ namespace ForestClue.Api.Controllers
         }
 
         [Authorize]
-        [HttpDelete]
-        public ActionResult RemoveProduct()
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveProduct([FromRoute] long id)
         {
+            await cartService.DeleteCartItemAsync(id);
+
             return Ok();
         }
 
         [Authorize]
-        [HttpPut]
-        public ActionResult UpdateProductQuantity()
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateProductQuantity([FromBody] UpdateCartRequest updateCartRequest)
         {
+            await cartService.UpdateCartQuantityAsync(updateCartRequest.Id, updateCartRequest.Type);
+
             return Ok();
         }
     }

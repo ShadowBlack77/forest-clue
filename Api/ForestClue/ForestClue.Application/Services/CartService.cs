@@ -1,4 +1,5 @@
 ﻿using ForestClue.Application.Abstractions;
+using ForestClue.Domain.Dtos;
 using ForestClue.Domain.Entities;
 using ForestClue.Domain.Requests;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +26,18 @@ namespace ForestClue.Application.Services
             await cartRepository.CreateCartAsync(cart);
         }
 
+        public async Task DeleteCartItemAsync(long id)
+        {
+            var claimsPrincipal = authTokenProcessor.GetClaimsPrincipal();
+
+            if (claimsPrincipal == null || !Guid.TryParse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value, out Guid userId))
+            {
+                throw new UnauthorizedAccessException("User is not logged in");
+            }
+
+            await cartRepository.DeleteCartItemAsync(userId, id);
+        }
+
         public async Task<Cart?> LoadCartAsync()
         {
             var claimsPrincipal = authTokenProcessor.GetClaimsPrincipal();
@@ -37,9 +50,28 @@ namespace ForestClue.Application.Services
             return await cartRepository.GetCartByUserIdAsync(userId);
         }
 
-        public Task UpdateCartAsync()
+        public async Task SaveCartItemsAsync(List<CartItemDto> cartItems)
         {
-            throw new NotImplementedException();
+            var claimsPrincipal = authTokenProcessor.GetClaimsPrincipal();
+
+            if (claimsPrincipal == null || !Guid.TryParse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value, out Guid userId))
+            {
+                throw new UnauthorizedAccessException("User is not logged in");
+            }
+
+            await cartRepository.SaveCartItemsAsync(userId, cartItems);
+        }
+
+        public async Task UpdateCartQuantityAsync(long id, string type)
+        {
+            var claimsPrincipal = authTokenProcessor.GetClaimsPrincipal();
+
+            if (claimsPrincipal == null || !Guid.TryParse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value, out Guid userId))
+            {
+                throw new UnauthorizedAccessException("User is not logged in");
+            }
+
+            await cartRepository.UpdateCartQuantityAsync(userId, id, type);
         }
     }
 }

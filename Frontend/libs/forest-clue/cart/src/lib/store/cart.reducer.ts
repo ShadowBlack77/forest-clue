@@ -102,5 +102,28 @@ export const cartReducer = createReducer(
       ...state,
       cart: updatedCart
     }
+  }),
+  on(cartActions.removeProductFromCart, (state, { id }) => {
+
+    const currentCart = state.cart;
+    const items = state.cart.items;
+
+    const exists = items.find((item) => item.id === id);
+
+    const updatedItems = exists ? items.filter((item) => {
+      return item.id !== id
+    }) : items;
+
+    const updatedCart: Cart = {
+      ...currentCart,
+      items: updatedItems,
+      totalQuantity: updatedItems.reduce((sum, i) => sum + i.quantity, 0),
+      totalPrice: updatedItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
+    }
+
+    return {
+      ...state,
+      cart: updatedCart
+    }
   })
 );

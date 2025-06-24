@@ -6,7 +6,10 @@ import { LoadProductsResolver } from '@lib/forest-clue/products';
 export const routes: Routes = [
   {
     path: '',
-    resolve: [LoadProductsResolver],
+    resolve: [
+      LoadProductsResolver,
+      LoadCartResolver
+    ],
     loadComponent: () => import('@lib/forest-clue/layouts').then((c) => c.RootLayoutComponent),
     children: [
       {
@@ -23,9 +26,6 @@ export const routes: Routes = [
       },
       {
         path: 'cart',
-        resolve: [
-          LoadCartResolver
-        ],
         loadComponent: () => import('./pages/cart/cart-page.component').then((c) => c.CartPageComponent)
       },
       {
