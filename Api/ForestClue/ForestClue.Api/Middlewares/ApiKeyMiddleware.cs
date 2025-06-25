@@ -7,7 +7,8 @@ namespace ForestClue.Api.Middlewares
     {
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Path.StartsWithSegments("/api"))
+            Console.WriteLine(context.Request.Path);
+            if (context.Request.Path.StartsWithSegments("/api") && !context.Request.Path.ToString().Contains("google"))
             {
                 if (!context.Request.Headers.TryGetValue(options.Value.HeaderName, out var extractedApiKey) ||
                     extractedApiKey != options.Value.Key)

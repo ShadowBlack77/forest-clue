@@ -41,7 +41,7 @@ builder.Services.Configure<ApiKeyOptions>(
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalDatabaseConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MainDatabaseConnection"));
 });
 
 builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>

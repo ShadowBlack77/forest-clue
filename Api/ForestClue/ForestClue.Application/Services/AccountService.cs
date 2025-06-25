@@ -142,51 +142,70 @@ namespace ForestClue.Application.Services
         {
             if (claimsPrincipal == null)
             {
-                throw new ExternalLoginProviderException("Google", "ClaimsPrincipe is null");
+                throw new ExternalLoginProviderException("Google", "ClaimsPrincipal is null");
             }
 
             var email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
+            var googleId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (email == null)
             {
                 throw new ExternalLoginProviderException("Google", "Email is null");
             }
 
-            var user = await userManager.FindByEmailAsync(email);
-
-            if (user == null)
+            if (googleId == null)
             {
-                var newUser = new User
-                {
-                    UserName = email,
-                    Email = email,
-                    EmailConfirmed = true
-                };
+                throw new ExternalLoginProviderException("Google", "Google ID (NameIdentifier) is null");
+            }
 
-                var result = await userManager.CreateAsync(newUser);
+            // Sprawdź, czy login Google już istnieje
+            var existingLoginUser = await userManager.FindByLoginAsync("Google", googleId);
+            User user;
 
-                if (!result.Succeeded)
+            if (existingLoginUser != null)
+            {
+                user = existingLoginUser;
+            }
+            else
+            {
+                // Jeśli nie znaleziono loginu, spróbuj znaleźć użytkownika po e-mailu
+                user = await userManager.FindByEmailAsync(email);
+
+                if (user == null)
                 {
-                    throw new ExternalLoginProviderException("Google", $"Unable to create user: {string.Join(", ", result.Errors.Select(x => x.Description))}");
+                    // Tworzenie nowego użytkownika
+                    var newUser = new User
+                    {
+                        UserName = email,
+                        Email = email,
+                        EmailConfirmed = true
+                    };
+
+                    var result = await userManager.CreateAsync(newUser);
+
+                    if (!result.Succeeded)
+                    {
+                        throw new ExternalLoginProviderException("Google", $"Unable to create user: {string.Join(", ", result.Errors.Select(x => x.Description))}");
+                    }
+
+                    user = newUser;
                 }
 
-                user = newUser;
+                // Dodaj login Google
+                var info = new UserLoginInfo("Google", googleId, "Google");
+                var loginResult = await userManager.AddLoginAsync(user, info);
+
+                if (!loginResult.Succeeded)
+                {
+                    throw new ExternalLoginProviderException("Google", $"Unable to add login: {string.Join(", ", loginResult.Errors.Select(x => x.Description))}");
+                }
             }
 
-            var info = new UserLoginInfo("Google", claimsPrincipal.FindFirstValue(ClaimTypes.Email) ?? string.Empty, "Google");
-
-            var loginResult = await userManager.AddLoginAsync(user, info);
-
-            if (!loginResult.Succeeded)
-            {
-                throw new ExternalLoginProviderException("Google", $"Unable to login the user: {string.Join(", ", loginResult.Errors.Select(x => x.Description))}");
-            }
-
+            // Generuj tokeny
             IList<string> roles = await userManager.GetRolesAsync(user);
 
             var (jwtToken, expirationDateInUtc) = authTokenProcessor.GenerateJwtToken(user, roles);
             var refreshTokenValue = authTokenProcessor.GenerateRefreshToken();
-
             var refreshTokenExpirationDateInUtc = DateTime.UtcNow.AddDays(7);
 
             user.RefreshToken = refreshTokenValue;
@@ -197,6 +216,7 @@ namespace ForestClue.Application.Services
             authTokenProcessor.WriteAuthTokenAsHttpOnlyCookie("ACCESS_TOKEN", jwtToken, expirationDateInUtc);
             authTokenProcessor.WriteAuthTokenAsHttpOnlyCookie("REFRESH_TOKEN", user.RefreshToken, refreshTokenExpirationDateInUtc);
         }
+
 
         public async Task<UserProfileDto> GetProfileAsync()
         {
@@ -238,7 +258,7 @@ namespace ForestClue.Application.Services
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = HttpUtility.UrlEncode(token);
 
-            emailProcessor.SendEmail(email, "Reset Password", $"http://localhost:4200/auth/account/reset-password?token={encodedToken}&email={email}");
+            emailProcessor.SendEmail(email, "Reset Password", $"https://localhost:7147/auth/account/reset-password?token={encodedToken}&email={email}");
         }
 
         public async Task NewPasswordAsync(string email, string token, string newPassword)

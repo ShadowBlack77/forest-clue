@@ -2,13 +2,14 @@
 using ForestClue.Domain.Dtos;
 using ForestClue.Domain.Entities;
 using ForestClue.Infrastructure.Options;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
 
 namespace ForestClue.Infrastructure.Processors
 {
-    public class StripeProcessor(IOptions<StripeOptions> stripeOptions, IOrdersRepository ordersRepository, ICartRepository cartRepository, IEmailProcessor emailProcessor) : IStripeProcessor
+    public class StripeProcessor(IOptions<StripeOptions> stripeOptions, IOrdersRepository ordersRepository, ICartRepository cartRepository, IEmailProcessor emailProcessor, IHttpContextAccessor httpContextAccessor) : IStripeProcessor
     {
         public async Task CheckoutSessionAsync(Guid userId, string sessionId)
         {
@@ -60,6 +61,10 @@ namespace ForestClue.Infrastructure.Processors
         {
             StripeConfiguration.ApiKey = stripeOptions.Value.SecretKey;
 
+            var request = httpContextAccessor.HttpContext?.Request;
+
+            var baseUrl = $"{request?.Scheme}://{request?.Host}";
+
             var lineItems = cartItems.Select(item => new SessionLineItemOptions
             {
                 PriceData = new SessionLineItemPriceDataOptions
@@ -80,8 +85,8 @@ namespace ForestClue.Infrastructure.Processors
             {
                 LineItems = lineItems,
                 Mode = "payment",
-                SuccessUrl = "http://localhost:4200/orders/success?session_id={CHECKOUT_SESSION_ID}",
-                CancelUrl = "http://localhost:4200/"
+                SuccessUrl = $"{baseUrl}/orders/success?session_id={{CHECKOUT_SESSION_ID}}",
+                CancelUrl = $"{baseUrl}/"
             };
 
             var service = new SessionService();

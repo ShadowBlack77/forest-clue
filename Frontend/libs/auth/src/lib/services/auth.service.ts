@@ -100,6 +100,6 @@ export class AuthService {
   }
 
   googleLogin(): void {
-    this._window.location.href = `${this._env.apiUrl}/auth/login/google?returnUrl=http://localhost:4200`
+    this._window.location.href = `${this._env.apiUrl}/auth/login/google?returnUrl=/`
   }
 }
