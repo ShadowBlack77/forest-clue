@@ -3,13 +3,15 @@ import { AuthService } from "../../services/auth.service";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { take } from "rxjs";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'lib-reset-password-form',
   templateUrl: './reset-password-form.component.html',
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    CommonModule
   ]
 })
 export class ResetPasswordFormComponent {

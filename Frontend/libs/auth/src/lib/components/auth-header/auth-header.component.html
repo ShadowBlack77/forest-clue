@@ -1,4 +1,9 @@
-<ul class="flex">
+<ul 
+  class="block" 
+  [ngClass]="{
+    'flex': !isMobile()
+  }"
+>
   @if (user$ | async; as user) {
     <li 
       class="ms-2" 
@@ -16,11 +21,19 @@
         <a routerLink="/admin">Dashboard</a>
       </li>
     }
-    <li class="ms-2">
+    <li 
+      class="ms-2" 
+      [ngClass]="{
+        'ms-2': !isMobile()
+    }">
       <lib-logout-button />
     </li>
   } @else {
-    <li class="ms-2">
+    <li 
+      class="ms-2" 
+      [ngClass]="{
+        'ms-2': !isMobile()
+    }">
       <a routerLink="/auth/login">Login</a>
     </li>
   }

@@ -3,13 +3,15 @@ import { AuthService } from "../../services/auth.service";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { take } from "rxjs";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'lib-register-form',
   templateUrl: './register-form.component.html',
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    CommonModule
   ]
 })
 export class RegisterFormComponent {
@@ -18,6 +20,7 @@ export class RegisterFormComponent {
   private readonly _router: Router = inject(Router);
 
   protected readonly isFormSubmitted: WritableSignal<boolean> = signal(false);
+  protected readonly registerErrorMessage: WritableSignal<string> = signal('');
 
   protected readonly registerForm: FormGroup = new FormGroup({
     username: new FormControl('', {
@@ -54,7 +57,8 @@ export class RegisterFormComponent {
           this.isFormSubmitted.set(false);
           this._router.navigateByUrl('/auth/login');
         },
-        error: () => {
+        error: (err) => {
+          this.registerErrorMessage.set(err.error);
           this.isFormSubmitted.set(false);
         }
       })

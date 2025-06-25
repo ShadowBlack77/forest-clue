@@ -1,4 +1,9 @@
 <form [formGroup]="registerForm" (submit)="onSubmit()">
+  @if (registerErrorMessage()) {
+    <div class="text-center mb-3">
+      <p class="ms-2 text-red-700 italic mt-1 text-xl">{{ registerErrorMessage() }}</p>
+    </div>
+  }
   <div class="mb-4 text-center">
     <h2 class="text-4xl">Register Form</h2>
   </div>
@@ -12,6 +17,18 @@
       placeholder="John Doe"
       class="border rounded-md py-1 px-2 w-full"
     >
+    @if (registerForm.controls['username'].invalid && registerForm.controls['username'].touched) {
+      @if (registerForm.controls['username'].errors?.['required']) {
+        <div>
+          <p class="ms-2 text-red-700 italic mt-1">*Field is required</p>
+        </div>
+      }
+      @if (registerForm.controls['username'].errors?.['minlength']) {
+        <div>
+          <p class="ms-2 text-red-700 italic mt-1">*Username need contains minimum 3 characters</p>
+        </div>
+      }
+    }
   </div>
   <div class="mb-3">
     <label for="email" class="block mb-1">Email</label>
@@ -23,6 +40,18 @@
       placeholder="john@example.com"
       class="border rounded-md py-1 px-2 w-full"
     >
+    @if (registerForm.controls['email'].invalid && registerForm.controls['email'].touched) {
+      @if (registerForm.controls['email'].errors?.['required']) {
+        <div>
+          <p class="ms-2 text-red-700 italic mt-1">*Field is required</p>
+        </div>
+      }
+      @if (registerForm.controls['email'].errors?.['email']) {
+        <div>
+          <p class="ms-2 text-red-700 italic mt-1">*Enter valid email</p>
+        </div>
+      }
+    }
   </div>
   <div class="mb-3">
     <label for="password" class="block mb-1">Password</label>
@@ -34,12 +63,31 @@
       placeholder="********"
       class="border rounded-md py-1 px-2 w-full"
     >
+    @if (registerForm.controls['password'].invalid && registerForm.controls['password'].touched) {
+      @if (registerForm.controls['password'].errors?.['required']) {
+        <div>
+          <p class="ms-2 text-red-700 italic mt-1">*Field is required</p>
+        </div>
+      }
+      @if (registerForm.controls['password'].errors?.['minlength']) {
+        <div>
+          <p class="ms-2 text-red-700 italic mt-1">*Password need contains minimum 8 characters</p>
+        </div>
+      }
+    }
   </div>
-  <div class="text-right">
+  <div class="text-right mb-5">
     <a routerLink="/auth/login">Back to Login page</a>
   </div>
   <div class="flex justify-center">
-    <button type="submit" class="bg-black text-white rounded-md w-1/2 text-xl">
+    <button 
+      [disabled]="!registerForm.valid"
+      [ngClass]="{
+        'bg-black/60': !registerForm.valid
+      }"
+      type="submit" 
+      class="bg-black text-white rounded-md w-1/2 text-xl"
+    >
       @if (isFormSubmitted()) {
         <div class="grid w-full place-items-center rounded-lg py-0.5">
           <svg class="text-gray-300 animate-spin" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"

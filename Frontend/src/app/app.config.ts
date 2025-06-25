@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { ENV_TOKEN } from '@lib/core/env';
@@ -16,7 +16,14 @@ import { CartEffects, cartReducer } from '@lib/forest-clue/cart';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
+    provideRouter(
+        routes, 
+        withViewTransitions(), 
+        withComponentInputBinding(),
+        withInMemoryScrolling({
+            scrollPositionRestoration: 'top'
+        })
+    ),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     {

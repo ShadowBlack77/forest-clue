@@ -3,13 +3,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { AuthService } from "../../services/auth.service";
 import { RouterLink } from "@angular/router";
 import { take } from "rxjs";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'lib-new-password-form',
   templateUrl: './new-password-form.component.html',
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    CommonModule
   ]
 })
 export class NewPasswordFormComponent {
