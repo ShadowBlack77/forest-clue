@@ -12,7 +12,7 @@ Full-Stack E-Commerce project - ForestClue!
 - PostgreSQL
 - Stripe
 - Docker
-- Azure
+- Render.com
 
 ## 🎯 Features
 
@@ -31,7 +31,7 @@ Full-Stack E-Commerce project - ForestClue!
 - ✅ Admin dashboard
 
 ## 🌐 Demo
-<!-- - 🔗 [https://glamour-hair-salon.onrender.com/home](https://glamour-hair-salon.onrender.com/home) -->
+- 🔗 [https://forestclue.onrender.com/](https://forestclue.onrender.com/)
 
 ## 🧠 Author
 - Daniel Miliczek
