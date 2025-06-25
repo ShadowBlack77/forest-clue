@@ -1,4 +1,5 @@
 using ForestClue.Api.Handlers;
+using ForestClue.Api.Middlewares;
 using ForestClue.Application.Abstractions;
 using ForestClue.Application.Services;
 using ForestClue.Domain.Entities;
@@ -35,6 +36,8 @@ builder.Services.Configure<EmailOptions>(
     builder.Configuration.GetSection(EmailOptions.EmailOptionsKey));
 builder.Services.Configure<StripeOptions>(
     builder.Configuration.GetSection(StripeOptions.StripeOptionsKey));
+builder.Services.Configure<ApiKeyOptions>(
+    builder.Configuration.GetSection(ApiKeyOptions.AuthenticationApiKey));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -131,6 +134,9 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors("CorsConfig");
 
 if (app.Environment.IsDevelopment())
@@ -140,9 +146,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();

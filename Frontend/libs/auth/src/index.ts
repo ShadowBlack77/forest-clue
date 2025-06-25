@@ -21,3 +21,4 @@ export * from './lib/guards/role.guard';
 
 // INTERCEPTORS
 export * from './lib/interceptors/refresh-token.interceptor';
+export * from './lib/interceptors/api-key.interceptor';

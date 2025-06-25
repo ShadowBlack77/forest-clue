@@ -2,6 +2,7 @@ import { InjectionToken } from "@angular/core";
 
 export interface EnvConfig {
   readonly apiUrl: string;
+  readonly apiKey: string;
   readonly stripePublicKey: string;
 }
 

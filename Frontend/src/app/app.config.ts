@@ -6,7 +6,7 @@ import { ENV_TOKEN } from '@lib/core/env';
 import { Environment } from '../env/environments';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { AuthService, RefreshTokenInterceptor } from '@lib/auth';
+import { ApiKeyInterceptor, AuthService, RefreshTokenInterceptor } from '@lib/auth';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { ProductsEffects, productsReducer } from '@lib/forest-clue/products';
@@ -38,12 +38,18 @@ export const appConfig: ApplicationConfig = {
         provide: ENV_TOKEN,
         useValue: {
             apiUrl: Environment.apiUrl,
+            apiKey: Environment.apiKey,
             stripePublicKey: Environment.stripePublicKey
         }
     },
     {
         provide: LOCAL_STORAGE_TOKEN,
         useValue: localStorage
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ApiKeyInterceptor,
+        multi: true
     },
     {
         provide: HTTP_INTERCEPTORS,
